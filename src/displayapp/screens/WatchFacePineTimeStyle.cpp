@@ -104,14 +104,14 @@ WatchFacePineTimeStyle::WatchFacePineTimeStyle(DisplayApp* app,
   lv_obj_align(sidebar, lv_scr_act(), LV_ALIGN_IN_TOP_RIGHT, 0, 0);
 
   // Display icons
-  batteryIcon.Create(sidebar);
-  batteryIcon.SetColor(LV_COLOR_BLACK);
-  lv_obj_align(batteryIcon.GetObject(), nullptr, LV_ALIGN_IN_TOP_MID, 0, 2);
-
   plugIcon = lv_label_create(lv_scr_act(), nullptr);
   lv_label_set_text_static(plugIcon, Symbols::plug);
   lv_obj_set_style_local_text_color(plugIcon, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_BLACK);
-  lv_obj_align(plugIcon, sidebar, LV_ALIGN_IN_TOP_MID, 0, 2);
+  lv_obj_align(plugIcon, sidebar, LV_ALIGN_IN_TOP_RIGHT, -2, 2);
+
+  batteryIcon.Create(sidebar);
+  batteryIcon.SetColor(LV_COLOR_BLACK);
+
 
   bleIcon = lv_label_create(lv_scr_act(), nullptr);
   lv_obj_set_style_local_text_color(bleIcon, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, lv_color_hex(0x000000));
@@ -170,7 +170,7 @@ WatchFacePineTimeStyle::WatchFacePineTimeStyle(DisplayApp* app,
   lv_obj_align(dateDay, sidebar, LV_ALIGN_CENTER, 0, 3);
 
   dateMonth = lv_label_create(lv_scr_act(), nullptr);
-  lv_obj_set_style_local_text_color(dateMonth, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_BLACK);
+  lv_obj_set_style_local_text_color(dateMonth, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_BLACK); 
   lv_label_set_text_static(dateMonth, "MAR");
   lv_obj_align(dateMonth, sidebar, LV_ALIGN_CENTER, 0, 25);
 
@@ -368,30 +368,34 @@ void WatchFacePineTimeStyle::SetBatteryIcon() {
 
 void WatchFacePineTimeStyle::AlignIcons() {
   if (notificationState.Get() && bleState.Get()) {
-    lv_obj_align(bleIcon, sidebar, LV_ALIGN_IN_TOP_MID, 8, 25);
-    lv_obj_align(notificationIcon, sidebar, LV_ALIGN_IN_TOP_MID, -8, 25);
+    lv_obj_align(bleIcon, batteryIcon.GetObject(), LV_ALIGN_IN_TOP_LEFT, -10, 0);
+    lv_obj_align(notificationIcon, bleIcon, LV_ALIGN_IN_TOP_LEFT, -10, 0);
   } else if (notificationState.Get() && !bleState.Get()) {
-    lv_obj_align(notificationIcon, sidebar, LV_ALIGN_IN_TOP_MID, 0, 25);
+    lv_obj_align(notificationIcon, batteryIcon.GetObject(), LV_ALIGN_IN_TOP_LEFT, -10, 0);
   } else {
-    lv_obj_align(bleIcon, sidebar, LV_ALIGN_IN_TOP_MID, 0, 25);
+    lv_obj_align(bleIcon, batteryIcon.GetObject(), LV_ALIGN_IN_TOP_LEFT, -10, 0);
   }
 }
 
-void WatchFacePineTimeStyle::Refresh() {
+void WatchFacePineTimeStyle::Refresh() { 
   isCharging = batteryController.IsCharging();
   if (isCharging.IsUpdated()) {
     if (isCharging.Get()) {
-      lv_obj_set_hidden(batteryIcon.GetObject(), true);
+      lv_obj_align(batteryIcon.GetObject(), plugIcon, LV_ALIGN_IN_TOP_RIGHT, -12, 0);
+//      lv_obj_set_hidden(batteryIcon.GetObject(), true);
       lv_obj_set_hidden(plugIcon, false);
+      AlignIcons();
     } else {
-      lv_obj_set_hidden(batteryIcon.GetObject(), false);
+ //     lv_obj_set_hidden(batteryIcon.GetObject(), false);
+      lv_obj_align(batteryIcon.GetObject(), sidebar, LV_ALIGN_IN_TOP_RIGHT, -8, 2);
       lv_obj_set_hidden(plugIcon, true);
       SetBatteryIcon();
+      AlignIcons();
     }
   }
   if (!isCharging.Get()) {
     batteryPercentRemaining = batteryController.PercentRemaining();
-    if (batteryPercentRemaining.IsUpdated()) {
+    if (batteryPercentRemaining.IsUpdated()) { 
       SetBatteryIcon();
     }
   }
