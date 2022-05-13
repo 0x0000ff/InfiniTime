@@ -30,6 +30,7 @@ namespace Pinetime {
                       Controllers::Ble& bleController,
                       Controllers::NotificationManager& notificatioManager,
                       Controllers::Settings& settingsController,
+                      Controllers::HeartRateController& heartRateController,
                       Controllers::MotionController& motionController);
         ~WatchFacePineTimeStyle() override;
 
@@ -56,6 +57,8 @@ namespace Pinetime {
         DirtyValue<bool> bleRadioEnabled {};
         DirtyValue<std::chrono::time_point<std::chrono::system_clock, std::chrono::nanoseconds>> currentDateTime {};
         DirtyValue<bool> motionSensorOk {};
+        DirtyValue<uint8_t> heartbeat {};
+        DirtyValue<bool> heartbeatRunning {};
         DirtyValue<uint32_t> stepCount {};
         DirtyValue<bool> notificationState {};
 
@@ -89,6 +92,9 @@ namespace Pinetime {
         lv_obj_t* calendarCrossBar1;
         lv_obj_t* calendarCrossBar2;
         lv_obj_t* notificationIcon;
+        lv_obj_t* heartrateBox;
+        lv_obj_t* heartbeatValue;
+        lv_obj_t* heartbeatIcon;
         lv_obj_t* stepGauge;
         lv_obj_t* btnSet;
         lv_obj_t* lbl_btnSet;
@@ -101,6 +107,7 @@ namespace Pinetime {
         Controllers::Ble& bleController;
         Controllers::NotificationManager& notificatioManager;
         Controllers::Settings& settingsController;
+        Controllers::HeartRateController& heartRateController;
         Controllers::MotionController& motionController;
 
         void SetBatteryIcon();

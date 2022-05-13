@@ -31,6 +31,7 @@
 #include "components/battery/BatteryController.h"
 #include "components/ble/BleController.h"
 #include "components/ble/NotificationManager.h"
+#include "components/heartrate/HeartRateController.h"
 #include "components/motion/MotionController.h"
 #include "components/settings/Settings.h"
 #include "displayapp/DisplayApp.h"
@@ -57,6 +58,7 @@ WatchFacePineTimeStyle::WatchFacePineTimeStyle(DisplayApp* app,
                              Controllers::Ble& bleController,
                              Controllers::NotificationManager& notificatioManager,
                              Controllers::Settings& settingsController,
+                             Controllers::HeartRateController& heartRateController,
                              Controllers::MotionController& motionController)
   : Screen(app),
     currentDateTime {{}},
@@ -65,13 +67,14 @@ WatchFacePineTimeStyle::WatchFacePineTimeStyle(DisplayApp* app,
     bleController {bleController},
     notificatioManager {notificatioManager},
     settingsController {settingsController},
+    heartRateController {heartRateController},
     motionController {motionController} {
 
   // Create a 200px wide background rectangle
   timebar = lv_obj_create(lv_scr_act(), nullptr);
   lv_obj_set_style_local_bg_color(timebar, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, Convert(settingsController.GetPTSColorBG()));
   lv_obj_set_style_local_radius(timebar, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, 0);
-  lv_obj_set_size(timebar, 200, 240);
+  lv_obj_set_size(timebar, 190, 240);
   lv_obj_align(timebar, lv_scr_act(), LV_ALIGN_IN_TOP_LEFT, 0, 0);
 
   // Display the time
@@ -97,7 +100,7 @@ WatchFacePineTimeStyle::WatchFacePineTimeStyle(DisplayApp* app,
   sidebar = lv_obj_create(lv_scr_act(), nullptr);
   lv_obj_set_style_local_bg_color(sidebar, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, Convert(settingsController.GetPTSColorBar()));
   lv_obj_set_style_local_radius(sidebar, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, 0);
-  lv_obj_set_size(sidebar, 40, 240);
+  lv_obj_set_size(sidebar,  50, 240);
   lv_obj_align(sidebar, lv_scr_act(), LV_ALIGN_IN_TOP_RIGHT, 0, 0);
 
   // Display icons
@@ -159,7 +162,7 @@ WatchFacePineTimeStyle::WatchFacePineTimeStyle(DisplayApp* app,
   dateDayOfWeek = lv_label_create(lv_scr_act(), nullptr);
   lv_obj_set_style_local_text_color(dateDayOfWeek, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_BLACK);
   lv_label_set_text_static(dateDayOfWeek, "THU");
-  lv_obj_align(dateDayOfWeek, sidebar, LV_ALIGN_CENTER, 0, -34);
+  lv_obj_align(dateDayOfWeek, sidebar, LV_ALIGN_CENTER, 0, -29);
 
   dateDay = lv_label_create(lv_scr_act(), nullptr);
   lv_obj_set_style_local_text_color(dateDay, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_BLACK);
@@ -169,8 +172,25 @@ WatchFacePineTimeStyle::WatchFacePineTimeStyle(DisplayApp* app,
   dateMonth = lv_label_create(lv_scr_act(), nullptr);
   lv_obj_set_style_local_text_color(dateMonth, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_BLACK);
   lv_label_set_text_static(dateMonth, "MAR");
-  lv_obj_align(dateMonth, sidebar, LV_ALIGN_CENTER, 0, 32);
+  lv_obj_align(dateMonth, sidebar, LV_ALIGN_CENTER, 0, 25);
 
+  /* Heartrate display
+  heartrateBox = lv_obj_create(lv_scr_act(), nullptr);
+  lv_obj_set_style_local_bg_color(heartrateBox, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_WHITE);
+  lv_obj_set_style_local_radius(heartrateBox, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, 0);
+  lv_obj_set_size(heartrateBox, 45, 20);
+  lv_obj_align(heartrateBox, sidebar, LV_ALIGN_CENTER, 0, 60); */
+
+  heartbeatIcon = lv_label_create(lv_scr_act(), nullptr);
+  lv_label_set_text_static(heartbeatIcon, Symbols::heartBeat);
+  lv_obj_set_style_local_text_color(heartbeatIcon, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, lv_color_hex(0xCE1B1B));
+  lv_obj_align(heartbeatIcon, sidebar, LV_ALIGN_IN_TOP_LEFT, 5, 170);
+
+  heartbeatValue = lv_label_create(lv_scr_act(), nullptr);
+  lv_obj_set_style_local_text_color(heartbeatValue, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, lv_color_hex(0xCE1B1B));
+  lv_label_set_text_static(heartbeatValue, "---");
+  lv_obj_align(heartbeatValue, heartbeatIcon, LV_ALIGN_OUT_RIGHT_MID, 0, 0); 
+  
   // Step count gauge
   if (settingsController.GetPTSColorBar() == Pinetime::Controllers::Settings::Colors::White) {
     needle_colors[0] = LV_COLOR_BLACK;
@@ -440,6 +460,24 @@ void WatchFacePineTimeStyle::Refresh() {
       currentDayOfWeek = dayOfWeek;
       currentDay = day;
     }
+  }
+
+
+  heartbeat = heartRateController.HeartRate();
+  heartbeatRunning = heartRateController.State() != Controllers::HeartRateController::States::Stopped;
+  if (heartbeat.IsUpdated() || heartbeatRunning.IsUpdated()) {
+    if (heartbeatRunning.Get()) {
+      lv_obj_set_style_local_text_color(heartbeatIcon, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, lv_color_hex(0xCE1B1B));
+      lv_label_set_text_fmt(heartbeatValue, "%d", heartbeat.Get());
+      lv_obj_set_style_local_text_color(heartbeatValue, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, lv_color_hex(0xCE1B1B));
+    } else {
+      lv_obj_set_style_local_text_color(heartbeatIcon, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, lv_color_hex(0x1B1B1B));
+      lv_label_set_text_static(heartbeatValue, "---");
+      lv_obj_set_style_local_text_color(heartbeatValue, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, lv_color_hex(0x1B1B1B));
+    }
+
+    lv_obj_realign(heartbeatIcon);
+    lv_obj_realign(heartbeatValue);
   }
 
   stepCount = motionController.NbSteps();
