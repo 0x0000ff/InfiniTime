@@ -25,13 +25,13 @@ namespace Pinetime {
       class WatchFacePineTimeStyle : public Screen {
       public:
         WatchFacePineTimeStyle(DisplayApp* app,
-                      Controllers::DateTime& dateTimeController,
-                      Controllers::Battery& batteryController,
-                      Controllers::Ble& bleController,
-                      Controllers::NotificationManager& notificatioManager,
-                      Controllers::Settings& settingsController,
-                      Controllers::HeartRateController& heartRateController,
-                      Controllers::MotionController& motionController);
+                               Controllers::DateTime& dateTimeController,
+                               Controllers::Battery& batteryController,
+                               Controllers::Ble& bleController,
+                               Controllers::NotificationManager& notificatioManager,
+                               Controllers::Settings& settingsController,
+                               Controllers::HeartRateController& heartRateController,
+                               Controllers::MotionController& motionController);
         ~WatchFacePineTimeStyle() override;
 
         bool OnTouchEvent(TouchEvents event) override;
@@ -39,7 +39,7 @@ namespace Pinetime {
 
         void Refresh() override;
 
-        void UpdateSelected(lv_obj_t *object, lv_event_t event);
+        void UpdateSelected(lv_obj_t* object, lv_event_t event);
 
       private:
         uint8_t displayedHour = -1;
@@ -50,6 +50,7 @@ namespace Pinetime {
         Controllers::DateTime::Days currentDayOfWeek = Pinetime::Controllers::DateTime::Days::Unknown;
         uint8_t currentDay = 0;
         uint32_t savedTick = 0;
+        bool inMenu = false;
 
         DirtyValue<uint8_t> batteryPercentRemaining {};
         DirtyValue<bool> isCharging {};
@@ -73,6 +74,7 @@ namespace Pinetime {
         lv_obj_t* btnPrevBG;
         lv_obj_t* btnReset;
         lv_obj_t* btnRandom;
+        lv_obj_t* btnPlug;
         lv_obj_t* btnClose;
         lv_obj_t* timebar;
         lv_obj_t* sidebar;

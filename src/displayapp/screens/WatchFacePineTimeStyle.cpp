@@ -82,19 +82,19 @@ WatchFacePineTimeStyle::WatchFacePineTimeStyle(DisplayApp* app,
   lv_obj_set_style_local_text_font(timeDD1, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, &open_sans_light);
   lv_obj_set_style_local_text_color(timeDD1, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, Convert(settingsController.GetPTSColorTime()));
   lv_label_set_text_static(timeDD1, "00");
-  lv_obj_align(timeDD1, timebar, LV_ALIGN_IN_TOP_MID, 5, 5);
+  lv_obj_align(timeDD1, timebar, LV_ALIGN_IN_TOP_MID, -5, 5);
 
   timeDD2 = lv_label_create(lv_scr_act(), nullptr);
   lv_obj_set_style_local_text_font(timeDD2, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, &open_sans_light);
   lv_obj_set_style_local_text_color(timeDD2, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, Convert(settingsController.GetPTSColorTime()));
   lv_label_set_text_static(timeDD2, "00");
-  lv_obj_align(timeDD2, timebar, LV_ALIGN_IN_BOTTOM_MID, 5, -5);
+  lv_obj_align(timeDD2, timebar, LV_ALIGN_IN_BOTTOM_MID, -5, -5);
 
   timeAMPM = lv_label_create(lv_scr_act(), nullptr);
   lv_obj_set_style_local_text_color(timeAMPM, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, Convert(settingsController.GetPTSColorTime()));
   lv_obj_set_style_local_text_line_space(timeAMPM, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, -3);
   lv_label_set_text_static(timeAMPM, "");
-  lv_obj_align(timeAMPM, timebar, LV_ALIGN_IN_BOTTOM_LEFT, 2, -20);
+  lv_obj_align(timeAMPM, timebar, LV_ALIGN_IN_BOTTOM_LEFT, 12, -20);
 
   // Create a 40px wide bar down the right side of the screen
   sidebar = lv_obj_create(lv_scr_act(), nullptr);
@@ -104,13 +104,15 @@ WatchFacePineTimeStyle::WatchFacePineTimeStyle(DisplayApp* app,
   lv_obj_align(sidebar, lv_scr_act(), LV_ALIGN_IN_TOP_RIGHT, 0, 0);
 
   // Display icons
-  plugIcon = lv_label_create(lv_scr_act(), nullptr);
+
+/*  plugIcon = lv_label_create(lv_scr_act(), nullptr);
   lv_label_set_text_static(plugIcon, Symbols::plug);
   lv_obj_set_style_local_text_color(plugIcon, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_BLACK);
-  lv_obj_align(plugIcon, sidebar, LV_ALIGN_IN_TOP_RIGHT, -2, 2);
+  lv_obj_align(plugIcon, sidebar, LV_ALIGN_IN_TOP_RIGHT, -2, 2); */
 
   batteryIcon.Create(sidebar);
   batteryIcon.SetColor(LV_COLOR_BLACK);
+  lv_obj_align(batteryIcon.GetObject(), sidebar, LV_ALIGN_IN_TOP_RIGHT, -4, 4);
 
 
   bleIcon = lv_label_create(lv_scr_act(), nullptr);
@@ -319,7 +321,18 @@ WatchFacePineTimeStyle::WatchFacePineTimeStyle(DisplayApp* app,
   lv_label_set_text_static(lbl_btnSet, Symbols::settings);
   lv_obj_set_hidden(btnSet, true);
 
+  btnPlug = lv_btn_create(lv_scr_act(), nullptr);
+  btnPlug->user_data = this;
+  lv_obj_set_size(btnPlug, 60, 60);
+  lv_obj_align(btnPlug, timebar, LV_ALIGN_CENTER, 0, 0);
+  lv_obj_set_style_local_bg_opa(btnPlug, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_OPA_50);
+  lv_obj_set_style_local_value_str(btnPlug, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, Symbols::plug);
+  lv_obj_set_style_local_text_color(btnPlug, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_BLACK);
+  lv_obj_set_event_cb(btnPlug, event_handler);
+  lv_obj_set_hidden(btnPlug, true);
+
   taskRefresh = lv_task_create(RefreshTaskCallback, LV_DISP_DEF_REFR_PERIOD, LV_TASK_PRIO_MID, this);
+
   Refresh();
 }
 
@@ -332,11 +345,12 @@ bool WatchFacePineTimeStyle::OnTouchEvent(Pinetime::Applications::TouchEvents ev
   if ((event == Pinetime::Applications::TouchEvents::LongTap) && lv_obj_get_hidden(btnRandom)) {
     lv_obj_set_hidden(btnSet, false);
     savedTick = lv_tick_get();
+    lv_obj_set_hidden(btnPlug, true);
     return true;
   }
   if ((event == Pinetime::Applications::TouchEvents::DoubleTap) && (lv_obj_get_hidden(btnRandom) == false)) {
     return true;
-  }
+  } 
   return false;
 }
 
@@ -351,6 +365,7 @@ void WatchFacePineTimeStyle::CloseMenu() {
   lv_obj_set_hidden(btnReset, true);
   lv_obj_set_hidden(btnRandom, true);
   lv_obj_set_hidden(btnClose, true);
+  lv_obj_set_hidden(btnPlug, !isCharging.Get());
 }
 
 bool WatchFacePineTimeStyle::OnButtonPushed() {
@@ -368,37 +383,41 @@ void WatchFacePineTimeStyle::SetBatteryIcon() {
 
 void WatchFacePineTimeStyle::AlignIcons() {
   if (notificationState.Get() && bleState.Get()) {
-    lv_obj_align(bleIcon, batteryIcon.GetObject(), LV_ALIGN_IN_TOP_LEFT, -10, 0);
+    lv_obj_align(bleIcon, batteryIcon.GetObject(), LV_ALIGN_IN_TOP_LEFT, -10, 2);
     lv_obj_align(notificationIcon, bleIcon, LV_ALIGN_IN_TOP_LEFT, -10, 0);
   } else if (notificationState.Get() && !bleState.Get()) {
-    lv_obj_align(notificationIcon, batteryIcon.GetObject(), LV_ALIGN_IN_TOP_LEFT, -10, 0);
+    lv_obj_align(notificationIcon, batteryIcon.GetObject(), LV_ALIGN_IN_TOP_LEFT, -10, 1);
   } else {
-    lv_obj_align(bleIcon, batteryIcon.GetObject(), LV_ALIGN_IN_TOP_LEFT, -10, 0);
+    lv_obj_align(bleIcon, batteryIcon.GetObject(), LV_ALIGN_IN_TOP_LEFT, -10, 1);
   }
-}
+} 
 
 void WatchFacePineTimeStyle::Refresh() { 
   isCharging = batteryController.IsCharging();
   if (isCharging.IsUpdated()) {
-    if (isCharging.Get()) {
+    lv_obj_set_hidden(btnPlug, !isCharging.Get());
+/*    if (isCharging.Get()) {
       lv_obj_align(batteryIcon.GetObject(), plugIcon, LV_ALIGN_IN_TOP_RIGHT, -12, 0);
 //      lv_obj_set_hidden(batteryIcon.GetObject(), true);
       lv_obj_set_hidden(plugIcon, false);
+      lv_obj_set_hidden(btnPlug, false);
       AlignIcons();
     } else {
  //     lv_obj_set_hidden(batteryIcon.GetObject(), false);
       lv_obj_align(batteryIcon.GetObject(), sidebar, LV_ALIGN_IN_TOP_RIGHT, -8, 2);
       lv_obj_set_hidden(plugIcon, true);
+      lv_obj_set_hidden(btnPlug, true);
       SetBatteryIcon();
-      AlignIcons();
+      AlignIcons(); */
     }
-  }
-  if (!isCharging.Get()) {
+  
+  /*if (!isCharging.Get()) {
     batteryPercentRemaining = batteryController.PercentRemaining();
     if (batteryPercentRemaining.IsUpdated()) { 
       SetBatteryIcon();
-    }
-  }
+    }*/
+  
+ 
 
   bleState = bleController.IsConnected();
   bleRadioEnabled = bleController.IsRadioEnabled();
