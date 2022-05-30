@@ -44,7 +44,7 @@ namespace {
   }
 
   bool IsBleIconVisible(bool isRadioEnabled, bool isConnected) {
-    if(!isRadioEnabled) {
+    if (!isRadioEnabled) {
       return true;
     }
     return isConnected;
@@ -52,12 +52,12 @@ namespace {
 }
 
 WatchFacePineTimeStyle::WatchFacePineTimeStyle(DisplayApp* app,
-                             Controllers::DateTime& dateTimeController,
-                             Controllers::Battery& batteryController,
-                             Controllers::Ble& bleController,
-                             Controllers::NotificationManager& notificatioManager,
-                             Controllers::Settings& settingsController,
-                             Controllers::MotionController& motionController)
+                                               Controllers::DateTime& dateTimeController,
+                                               Controllers::Battery& batteryController,
+                                               Controllers::Ble& bleController,
+                                               Controllers::NotificationManager& notificatioManager,
+                                               Controllers::Settings& settingsController,
+                                               Controllers::MotionController& motionController)
   : Screen(app),
     currentDateTime {{}},
     dateTimeController {dateTimeController},
@@ -114,6 +114,13 @@ WatchFacePineTimeStyle::WatchFacePineTimeStyle(DisplayApp* app,
   lv_obj_set_style_local_text_color(bleIcon, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, lv_color_hex(0x000000));
   lv_label_set_text_static(bleIcon, "");
 
+  bleSquare = lv_obj_create(lv_scr_act(), nullptr);
+  lv_obj_set_style_local_bg_color(bleSquare, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_BLUE);
+  lv_obj_set_style_local_radius(bleSquare, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, 0);
+  lv_obj_set_size(bleSquare, 12, 12);
+  lv_obj_align(bleSquare, timebar, LV_ALIGN_IN_TOP_LEFT, 0, 0);
+  lv_obj_set_hidden(bleSquare, true);
+  
   notificationIcon = lv_label_create(lv_scr_act(), nullptr);
   lv_obj_set_style_local_text_color(notificationIcon, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, lv_color_hex(0x000000));
   lv_label_set_text_static(notificationIcon, "");
@@ -372,8 +379,9 @@ void WatchFacePineTimeStyle::Refresh() {
   bleState = bleController.IsConnected();
   bleRadioEnabled = bleController.IsRadioEnabled();
   if (bleState.IsUpdated() || bleRadioEnabled.IsUpdated()) {
-    lv_label_set_text_static(bleIcon, BleIcon::GetIcon(bleState.Get()));
-    AlignIcons();
+//    lv_label_set_text_static(bleIcon, BleIcon::GetIcon(bleState.Get()));
+//    AlignIcons();
+    lv_obj_set_hidden(bleSquare, !bleState.Get());
   }
 
   notificationState = notificatioManager.AreNewNotificationsAvailable();

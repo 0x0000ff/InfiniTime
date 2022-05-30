@@ -81,6 +81,7 @@ namespace Pinetime {
         lv_obj_t* dateMonth;
         lv_obj_t* plugIcon;
         lv_obj_t* bleIcon;
+        lv_obj_t* bleSquare;
         lv_obj_t* calendarOuter;
         lv_obj_t* calendarInner;
         lv_obj_t* calendarBar1;
