@@ -312,6 +312,16 @@ WatchFacePineTimeStyle::WatchFacePineTimeStyle(DisplayApp* app,
   lv_label_set_text_static(lbl_btnSet, Symbols::settings);
   lv_obj_set_hidden(btnSet, true);
 
+  btnPlug = lv_btn_create(lv_scr_act(), nullptr);
+  btnPlug->user_data = this;
+  lv_obj_set_size(btnPlug, 60, 60);
+  lv_obj_align(btnPlug, timebar, LV_ALIGN_CENTER, 0, 0);
+  lv_obj_set_style_local_bg_opa(btnPlug, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_OPA_50);
+  lv_obj_set_style_local_value_str(btnPlug, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, Symbols::plug);
+  lv_obj_set_style_local_text_color(btnPlug, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_BLACK);
+  lv_obj_set_event_cb(btnPlug, event_handler);
+  lv_obj_set_hidden(btnPlug, true);
+
   taskRefresh = lv_task_create(RefreshTaskCallback, LV_DISP_DEF_REFR_PERIOD, LV_TASK_PRIO_MID, this);
   Refresh();
 }
@@ -373,22 +383,8 @@ void WatchFacePineTimeStyle::AlignIcons() {
 void WatchFacePineTimeStyle::Refresh() {
   isCharging = batteryController.IsCharging();
   if (isCharging.IsUpdated()) {
-    if (isCharging.Get()) {
-      lv_obj_set_hidden(batteryIcon.GetObject(), true);
-      lv_obj_set_hidden(plugIcon, false);
-    } else {
-      lv_obj_set_hidden(batteryIcon.GetObject(), false);
-      lv_obj_set_hidden(plugIcon, true);
-      SetBatteryIcon();
-    }
-  }
-  if (!isCharging.Get()) {
-    batteryPercentRemaining = batteryController.PercentRemaining();
-    if (batteryPercentRemaining.IsUpdated()) {
-      SetBatteryIcon();
-    }
-  }
-
+    lv_obj_set_hidden(btnPlug, !isCharging.Get());
+    
   bleState = bleController.IsConnected();
   bleRadioEnabled = bleController.IsRadioEnabled();
   if (bleState.IsUpdated() || bleRadioEnabled.IsUpdated()) {
