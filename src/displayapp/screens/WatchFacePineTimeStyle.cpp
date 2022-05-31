@@ -59,7 +59,7 @@ WatchFacePineTimeStyle::WatchFacePineTimeStyle(DisplayApp* app,
                                                Controllers::Ble& bleController,
                                                Controllers::NotificationManager& notificatioManager,
                                                Controllers::Settings& settingsController,
-                                               Controllers::HeartrateController& heartRateController,
+                                               Controllers::HeartRateController& heartRateController,
                                                Controllers::MotionController& motionController)
   : Screen(app),
     currentDateTime {{}},
@@ -120,7 +120,6 @@ WatchFacePineTimeStyle::WatchFacePineTimeStyle(DisplayApp* app,
 
   bleSquare = lv_obj_create(lv_scr_act(), nullptr);
   lv_obj_set_style_local_bg_color(bleSquare, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_BLUE);
-  lv_obj_set_style_local_radius(bleSquare, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, 0);
   lv_obj_set_size(bleSquare, 12, 12);
   lv_obj_align(bleSquare, timebar, LV_ALIGN_IN_TOP_LEFT, 0, 0);
   lv_obj_set_hidden(bleSquare, true);
@@ -134,7 +133,7 @@ WatchFacePineTimeStyle::WatchFacePineTimeStyle(DisplayApp* app,
   lv_obj_set_style_local_bg_color(calendarOuter, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_BLACK);
   lv_obj_set_style_local_radius(calendarOuter, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, 0);
   lv_obj_set_size(calendarOuter, 34, 34);
-  lv_obj_align(calendarOuter, sidebar, LV_ALIGN_CENTER, 0, 0);
+  lv_obj_align(calendarOuter, sidebar, LV_ALIGN_CENTER, 0, -10);
 
   calendarInner = lv_obj_create(lv_scr_act(), nullptr);
   lv_obj_set_style_local_bg_color(calendarInner, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_WHITE);
@@ -170,27 +169,27 @@ WatchFacePineTimeStyle::WatchFacePineTimeStyle(DisplayApp* app,
   dateDayOfWeek = lv_label_create(lv_scr_act(), nullptr);
   lv_obj_set_style_local_text_color(dateDayOfWeek, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_BLACK);
   lv_label_set_text_static(dateDayOfWeek, "THU");
-  lv_obj_align(dateDayOfWeek, sidebar, LV_ALIGN_CENTER, 0, -34);
+  lv_obj_align(dateDayOfWeek, sidebar, LV_ALIGN_CENTER, 0, -44);
 
   dateDay = lv_label_create(lv_scr_act(), nullptr);
   lv_obj_set_style_local_text_color(dateDay, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_BLACK);
   lv_label_set_text_static(dateDay, "25");
-  lv_obj_align(dateDay, sidebar, LV_ALIGN_CENTER, 0, 3);
+  lv_obj_align(dateDay, sidebar, LV_ALIGN_CENTER, 0, -7);
 
   dateMonth = lv_label_create(lv_scr_act(), nullptr);
   lv_obj_set_style_local_text_color(dateMonth, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_BLACK);
   lv_label_set_text_static(dateMonth, "MAR");
-  lv_obj_align(dateMonth, sidebar, LV_ALIGN_CENTER, 0, 32);
+  lv_obj_align(dateMonth, sidebar, LV_ALIGN_CENTER, 0, 22);
 
   heartbeatIcon = lv_label_create(lv_scr_act(), nullptr);
   lv_label_set_text_static(heartbeatIcon, Symbols::heartBeat);
   lv_obj_set_style_local_text_color(heartbeatIcon, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, lv_color_hex(0xCE1B1B));
-  lv_obj_align(heartbeatIcon, sidebar, LV_ALIGN_IN_TOP_LEFT, 5, 170);
+  lv_obj_align(heartbeatIcon, sidebar, LV_ALIGN_OUT_TOP_MID, 0, 175);
 
-  heartbeatValue = lv_label_create(lv_scr_act(), nullptr);
+  heartbeatValue = lv_label_create(lv_scr_act(), nullptr); 
   lv_obj_set_style_local_text_color(heartbeatValue, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, lv_color_hex(0xCE1B1B));
   lv_label_set_text_static(heartbeatValue, "---");
-  lv_obj_align(heartbeatValue, heartbeatIcon, LV_ALIGN_OUT_RIGHT_MID, 0, 0); 
+  lv_obj_align(heartbeatValue, heartbeatIcon, LV_ALIGN_OUT_BOTTOM_MID, 0, 0); 
 
   // Step count gauge
   if (settingsController.GetPTSColorBar() == Pinetime::Controllers::Settings::Colors::White) {
