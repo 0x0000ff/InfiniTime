@@ -59,6 +59,7 @@ WatchFacePineTimeStyle::WatchFacePineTimeStyle(DisplayApp* app,
                                                Controllers::Ble& bleController,
                                                Controllers::NotificationManager& notificatioManager,
                                                Controllers::Settings& settingsController,
+                                               Controllers::HeartrateController& heartRateController,
                                                Controllers::MotionController& motionController)
   : Screen(app),
     currentDateTime {{}},
