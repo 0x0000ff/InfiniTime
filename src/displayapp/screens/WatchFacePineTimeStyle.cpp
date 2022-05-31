@@ -121,7 +121,7 @@ WatchFacePineTimeStyle::WatchFacePineTimeStyle(DisplayApp* app,
   bleSquare = lv_obj_create(lv_scr_act(), nullptr);
   lv_obj_set_style_local_bg_color(bleSquare, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_BLUE);
   lv_obj_set_size(bleSquare, 12, 12);
-  lv_obj_align(bleSquare, timebar, LV_ALIGN_IN_TOP_LEFT, 0, 0);
+  lv_obj_align(bleSquare, timebar, LV_ALIGN_IN_TOP_LEFT, 5, 5);
   lv_obj_set_hidden(bleSquare, true);
   
   notificationIcon = lv_label_create(lv_scr_act(), nullptr);
@@ -384,7 +384,7 @@ void WatchFacePineTimeStyle::Refresh() {
   isCharging = batteryController.IsCharging();
   if (isCharging.IsUpdated()) {
     lv_obj_set_hidden(btnPlug, !isCharging.Get());
-    
+  }
   bleState = bleController.IsConnected();
   bleRadioEnabled = bleController.IsRadioEnabled();
   if (bleState.IsUpdated() || bleRadioEnabled.IsUpdated()) {
