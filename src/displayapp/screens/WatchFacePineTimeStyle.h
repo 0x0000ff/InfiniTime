@@ -83,6 +83,7 @@ namespace Pinetime {
         lv_obj_t* dateDayOfWeek;
         lv_obj_t* dateDay;
         lv_obj_t* dateMonth;
+        lv_obj_t* batteryIcon;
         lv_obj_t* plugIcon;
         lv_obj_t* bleIcon;
         lv_obj_t* bleSquare;
@@ -101,7 +102,6 @@ namespace Pinetime {
         lv_obj_t* lbl_btnSet;
         lv_color_t needle_colors[1];
 
-        BatteryIcon_old batteryIcon;
 
         Controllers::DateTime& dateTimeController;
         Controllers::Battery& batteryController;
