@@ -5,7 +5,7 @@
 namespace Pinetime {
   namespace Applications {
     namespace Screens {
-      class BatteryIcon {
+      class BatteryIcon_old {
       public:
         static const char* GetUnknownIcon();
         static const char* GetBatteryIcon(uint8_t batteryPercent);

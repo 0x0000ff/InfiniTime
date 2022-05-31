@@ -4,7 +4,7 @@
 
 using namespace Pinetime::Applications::Screens;
 
-const char* BatteryIcon::GetBatteryIcon(uint8_t batteryPercent) {
+const char* BatteryIcon_old::GetBatteryIcon(uint8_t batteryPercent) {
   if (batteryPercent > 87)
     return Symbols::batteryFull;
   if (batteryPercent > 62)
@@ -16,11 +16,11 @@ const char* BatteryIcon::GetBatteryIcon(uint8_t batteryPercent) {
   return Symbols::batteryEmpty;
 }
 
-const char* BatteryIcon::GetUnknownIcon() {
+const char* BatteryIcon_old::GetUnknownIcon() {
   return Symbols::batteryEmpty;
 }
 
-const char* BatteryIcon::GetPlugIcon(bool isCharging) {
+const char* BatteryIcon_old::GetPlugIcon(bool isCharging) {
   if (isCharging)
     return Symbols::plug;
   else
