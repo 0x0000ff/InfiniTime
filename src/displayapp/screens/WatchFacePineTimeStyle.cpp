@@ -130,7 +130,7 @@ WatchFacePineTimeStyle::WatchFacePineTimeStyle(DisplayApp* app,
   lv_obj_set_style_local_bg_color(calendarOuter, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_BLACK);
   lv_obj_set_style_local_radius(calendarOuter, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, 0);
   lv_obj_set_size(calendarOuter, 34, 34);
-  lv_obj_align(calendarOuter, sidebar, LV_ALIGN_CENTER, 0, -10);
+  lv_obj_align(calendarOuter, sidebar, LV_ALIGN_CENTER, 0, -14);
 
   calendarInner = lv_obj_create(lv_scr_act(), nullptr);
   lv_obj_set_style_local_bg_color(calendarInner, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_WHITE);
@@ -166,18 +166,19 @@ WatchFacePineTimeStyle::WatchFacePineTimeStyle(DisplayApp* app,
   dateDayOfWeek = lv_label_create(lv_scr_act(), nullptr);
   lv_obj_set_style_local_text_color(dateDayOfWeek, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_BLACK);
   lv_label_set_text_static(dateDayOfWeek, "THU");
-  lv_obj_align(dateDayOfWeek, sidebar, LV_ALIGN_CENTER, 0, -44);
+  lv_obj_align(dateDayOfWeek, sidebar, LV_ALIGN_CENTER, 0, -48);
 
   dateDay = lv_label_create(lv_scr_act(), nullptr);
   lv_obj_set_style_local_text_color(dateDay, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_BLACK);
   lv_label_set_text_static(dateDay, "25");
-  lv_obj_align(dateDay, sidebar, LV_ALIGN_CENTER, 0, -7);
+  lv_obj_align(dateDay, dateDayOfWeek, LV_ALIGN_OUT_BOTTOM_MID, 0, 10);
 
   dateMonth = lv_label_create(lv_scr_act(), nullptr);
   lv_obj_set_style_local_text_color(dateMonth, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_BLACK);
   lv_label_set_text_static(dateMonth, "MAR");
-  lv_obj_align(dateMonth, sidebar, LV_ALIGN_CENTER, 0, 22);
+  lv_obj_align(dateMonth, dateDayOfWeek, LV_ALIGN_OUT_BOTTOM_MID, 0, 40);
 
+  //Heartrate monitor
   heartbeatIcon = lv_label_create(lv_scr_act(), nullptr);
   lv_label_set_text_static(heartbeatIcon, Symbols::heartBeat);
   lv_obj_set_style_local_text_color(heartbeatIcon, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, lv_color_hex(0xCE1B1B));
@@ -186,7 +187,8 @@ WatchFacePineTimeStyle::WatchFacePineTimeStyle(DisplayApp* app,
   heartbeatValue = lv_label_create(lv_scr_act(), nullptr); 
   lv_obj_set_style_local_text_color(heartbeatValue, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, lv_color_hex(0xCE1B1B));
   lv_label_set_text_static(heartbeatValue, "---");
-  lv_obj_align(heartbeatValue, heartbeatIcon, LV_ALIGN_OUT_BOTTOM_MID, 0, 0); 
+  //there appears to be excess space between the icon and the numbers when it is directly aligned with the icon.
+  lv_obj_align(heartbeatValue, heartbeatIcon, LV_ALIGN_OUT_BOTTOM_MID, 0, -5); 
 
   // Step count gauge
   if (settingsController.GetPTSColorBar() == Pinetime::Controllers::Settings::Colors::White) {
