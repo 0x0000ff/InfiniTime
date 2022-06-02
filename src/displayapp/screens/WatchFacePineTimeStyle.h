@@ -8,7 +8,7 @@
 #include "displayapp/Colors.h"
 #include "components/datetime/DateTimeController.h"
 #include "components/ble/BleController.h"
-#include <displayapp/screens/BatteryIcon_old.h>
+#include <displayapp/screens/BatteryIcon.h>
 
 namespace Pinetime {
   namespace Controllers {
@@ -83,7 +83,6 @@ namespace Pinetime {
         lv_obj_t* dateDayOfWeek;
         lv_obj_t* dateDay;
         lv_obj_t* dateMonth;
-        lv_obj_t* batteryIcon;
         lv_obj_t* plugIcon;
         lv_obj_t* bleIcon;
         lv_obj_t* bleSquare;
@@ -102,6 +101,7 @@ namespace Pinetime {
         lv_obj_t* lbl_btnSet;
         lv_color_t needle_colors[1];
 
+        BatteryIcon batteryIcon;
 
         Controllers::DateTime& dateTimeController;
         Controllers::Battery& batteryController;

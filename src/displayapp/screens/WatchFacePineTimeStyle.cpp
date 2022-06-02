@@ -25,7 +25,7 @@
 #include <lvgl/lvgl.h>
 #include <cstdio>
 #include <displayapp/Colors.h>
-#include "displayapp/screens/BatteryIcon_old.h"
+#include "displayapp/screens/BatteryIcon.h"
 #include "displayapp/screens/BleIcon.h"
 #include "displayapp/screens/NotificationIcon.h"
 #include "displayapp/screens/Symbols.h"
@@ -106,11 +106,9 @@ WatchFacePineTimeStyle::WatchFacePineTimeStyle(DisplayApp* app,
   lv_obj_align(sidebar, lv_scr_act(), LV_ALIGN_IN_TOP_RIGHT, 0, 0);
 
   // Display icons
-  batteryIcon = lv_label_create(lv_scr_act(), nullptr);
-  lv_obj_set_style_local_text_color(batteryIcon, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_BLACK);
-  lv_label_set_text_static(batteryIcon, Symbols::batteryFull);
-  lv_obj_align(batteryIcon, sidebar, LV_ALIGN_IN_TOP_MID, 0, 2);
-  lv_obj_set_auto_realign(batteryIcon, true);
+  batteryIcon.Create(sidebar);
+  batteryIcon.SetColor(LV_COLOR_BLACK);
+  lv_obj_align(batteryIcon.GetObject(), sidebar, LV_ALIGN_IN_TOP_RIGHT, -4, 4);
 
   bleIcon = lv_label_create(lv_scr_act(), nullptr);
   lv_obj_set_style_local_text_color(bleIcon, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, lv_color_hex(0x000000));
@@ -366,18 +364,13 @@ bool WatchFacePineTimeStyle::OnButtonPushed() {
 
 void WatchFacePineTimeStyle::SetBatteryIcon() {
   auto batteryPercent = batteryPercentRemaining.Get();
-  lv_label_set_text_static(batteryIcon, BatteryIcon_old::GetBatteryIcon(batteryPercent));
+  batteryIcon.SetBatteryPercentage(batteryPercent);
 }
 
 void WatchFacePineTimeStyle::AlignIcons() {
-  if (notificationState.Get() && bleState.Get()) {
-    lv_obj_align(bleIcon, sidebar, LV_ALIGN_IN_TOP_MID, 8, 25);
-    lv_obj_align(notificationIcon, sidebar, LV_ALIGN_IN_TOP_MID, -8, 25);
-  } else if (notificationState.Get() && !bleState.Get()) {
-    lv_obj_align(notificationIcon, sidebar, LV_ALIGN_IN_TOP_MID, 0, 25);
-  } else {
-    lv_obj_align(bleIcon, sidebar, LV_ALIGN_IN_TOP_MID, 0, 25);
-  }
+  if (notificationState.Get()) {
+    lv_obj_align(notificationIcon, batteryIcon.GetObject(), LV_ALIGN_OUT_LEFT_MID, 0, 0);
+  } 
 }
 
 void WatchFacePineTimeStyle::Refresh() {
