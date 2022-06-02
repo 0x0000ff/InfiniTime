@@ -369,7 +369,7 @@ void WatchFacePineTimeStyle::SetBatteryIcon() {
 
 void WatchFacePineTimeStyle::AlignIcons() {
   if (notificationState.Get()) {
-    lv_obj_align(notificationIcon, batteryIcon.GetObject(), LV_ALIGN_OUT_LEFT_MID, 0, 0);
+    lv_obj_align(notificationIcon, batteryIcon.GetObject(), LV_ALIGN_OUT_LEFT_MID, -5, 0);
   } 
 }
 
