@@ -108,7 +108,7 @@ WatchFacePineTimeStyle::WatchFacePineTimeStyle(DisplayApp* app,
   // Display icons
   batteryIcon.Create(sidebar);
   batteryIcon.SetColor(LV_COLOR_BLACK);
-  lv_obj_align(batteryIcon.GetObject(), sidebar, LV_ALIGN_IN_TOP_RIGHT, -4, 4);
+  lv_obj_align(batteryIcon.GetObject(), sidebar, LV_ALIGN_IN_TOP_MID, 0, 0);
 
   bleIcon = lv_label_create(lv_scr_act(), nullptr);
   lv_obj_set_style_local_text_color(bleIcon, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, lv_color_hex(0x000000));
@@ -370,6 +370,7 @@ void WatchFacePineTimeStyle::SetBatteryIcon() {
 void WatchFacePineTimeStyle::AlignIcons() {
   if (notificationState.Get()) {
     lv_obj_align(notificationIcon, batteryIcon.GetObject(), LV_ALIGN_OUT_LEFT_MID, -5, 0);
+    lv_obj_align(batteryIcon.GetObject(), sidebar, LV_ALIGN_IN_TOP_RIGHT, -4, 4);
   } 
 }
 
