@@ -359,6 +359,7 @@ bool WatchFacePineTimeStyle::OnButtonPushed() {
 }
 
 void WatchFacePineTimeStyle::SetBatteryIcon() {
+  batteryPercentRemaining = batteryController.PercentRemaining();
   auto batteryPercent = batteryPercentRemaining.Get();
   batteryIcon.SetBatteryPercentage(batteryPercent);
 }
@@ -367,7 +368,6 @@ void WatchFacePineTimeStyle::AlignIcons() {
   if (notificationState.Get()) {
     lv_obj_align(batteryIcon.GetObject(), sidebar, LV_ALIGN_IN_TOP_MID, 6, 4);
     lv_obj_align(notificationIcon, batteryIcon.GetObject(), LV_ALIGN_OUT_LEFT_MID, -6, 0);
-    
 
   } 
   else {
