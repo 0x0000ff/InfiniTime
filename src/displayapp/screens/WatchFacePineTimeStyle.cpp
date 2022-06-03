@@ -109,10 +109,6 @@ WatchFacePineTimeStyle::WatchFacePineTimeStyle(DisplayApp* app,
   batteryIcon.Create(sidebar);
   batteryIcon.SetColor(LV_COLOR_BLACK);
 
-  bleIcon = lv_label_create(lv_scr_act(), nullptr);
-  lv_obj_set_style_local_text_color(bleIcon, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, lv_color_hex(0x000000));
-  lv_label_set_text_static(bleIcon, "");
-
   bleSquare = lv_obj_create(lv_scr_act(), nullptr);
   lv_obj_set_style_local_bg_color(bleSquare, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_BLUE);
   lv_obj_set_size(bleSquare, 12, 12);
@@ -387,9 +383,7 @@ void WatchFacePineTimeStyle::Refresh() {
   bleState = bleController.IsConnected();
   bleRadioEnabled = bleController.IsRadioEnabled();
   if (bleState.IsUpdated() || bleRadioEnabled.IsUpdated()) {
-//    lv_label_set_text_static(bleIcon, BleIcon::GetIcon(bleState.Get()));
-//    AlignIcons();
-    lv_obj_set_hidden(bleSquare, !bleState.Get());
+      lv_obj_set_hidden(bleSquare, !bleState.Get());
   }
 
   notificationState = notificatioManager.AreNewNotificationsAvailable();

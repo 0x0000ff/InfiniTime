@@ -83,8 +83,6 @@ namespace Pinetime {
         lv_obj_t* dateDayOfWeek;
         lv_obj_t* dateDay;
         lv_obj_t* dateMonth;
-        lv_obj_t* plugIcon;
-        lv_obj_t* bleIcon;
         lv_obj_t* bleSquare;
         lv_obj_t* calendarOuter;
         lv_obj_t* calendarInner;
@@ -93,7 +91,6 @@ namespace Pinetime {
         lv_obj_t* calendarCrossBar1;
         lv_obj_t* calendarCrossBar2;
         lv_obj_t* notificationIcon;
-        lv_obj_t* heartrateBox;
         lv_obj_t* heartbeatValue;
         lv_obj_t* heartbeatIcon;
         lv_obj_t* stepGauge;
