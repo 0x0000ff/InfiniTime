@@ -108,6 +108,7 @@ WatchFacePineTimeStyle::WatchFacePineTimeStyle(DisplayApp* app,
   // Display icons
   batteryIcon.Create(sidebar);
   batteryIcon.SetColor(LV_COLOR_BLACK);
+  lv_obj_align(batteryIcon.GetObject(), nullptr, LV_ALIGN_IN_TOP_MID, 0, 2);
 
   bleSquare = lv_obj_create(lv_scr_act(), nullptr);
   lv_obj_set_style_local_bg_color(bleSquare, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_BLUE);
@@ -376,6 +377,7 @@ void WatchFacePineTimeStyle::AlignIcons() {
 
 
 void WatchFacePineTimeStyle::Refresh() {
+  SetBatteryIcon();
   isCharging = batteryController.IsCharging();
   if (isCharging.IsUpdated()) {
     lv_obj_set_hidden(btnPlug, !isCharging.Get());
