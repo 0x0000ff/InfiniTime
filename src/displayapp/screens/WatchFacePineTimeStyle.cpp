@@ -112,8 +112,8 @@ WatchFacePineTimeStyle::WatchFacePineTimeStyle(DisplayApp* app,
 
   bleSquare = lv_obj_create(lv_scr_act(), nullptr);
   lv_obj_set_style_local_bg_color(bleSquare, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_BLUE);
-  lv_obj_set_size(bleSquare, 12, 12);
-  lv_obj_align(bleSquare, timebar, LV_ALIGN_IN_TOP_LEFT, 5, 5);
+  lv_obj_set_size(bleSquare, 8, 8);
+  lv_obj_align(bleSquare, timebar, LV_ALIGN_IN_TOP_RIGHT, -5, 4);
   lv_obj_set_hidden(bleSquare, true);
   
   notificationIcon = lv_label_create(lv_scr_act(), nullptr);
@@ -306,16 +306,11 @@ WatchFacePineTimeStyle::WatchFacePineTimeStyle(DisplayApp* app,
   lv_label_set_text_static(lbl_btnSet, Symbols::settings);
   lv_obj_set_hidden(btnSet, true);
 
-  btnPlug = lv_btn_create(lv_scr_act(), nullptr);
-  btnPlug->user_data = this;
-  lv_obj_set_size(btnPlug, 60, 60);
-  lv_obj_align(btnPlug, timebar, LV_ALIGN_CENTER, 0, 0);
-  lv_obj_set_style_local_bg_opa(btnPlug, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_OPA_50);
-  lv_obj_set_style_local_value_str(btnPlug, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, Symbols::plug);
-  lv_obj_set_style_local_text_color(btnPlug, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_BLACK);
-  lv_obj_set_event_cb(btnPlug, event_handler);
-  lv_obj_set_hidden(btnPlug, true);
-
+  plugSquare = lv_obj_create(lv_scr_act(), nullptr);
+  lv_obj_set_style_local_bg_color(plugSquare, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_YELLOW);
+  lv_obj_set_size(plugSquare, 8, 8);
+  lv_obj_align(plugSquare, timebar, LV_ALIGN_IN_TOP_RIGHT, -5, 16);
+  lv_obj_set_hidden(plugSquare, true);
   taskRefresh = lv_task_create(RefreshTaskCallback, LV_DISP_DEF_REFR_PERIOD, LV_TASK_PRIO_MID, this);
   Refresh();
 }
@@ -380,7 +375,7 @@ void WatchFacePineTimeStyle::Refresh() {
   SetBatteryIcon();
   isCharging = batteryController.IsCharging();
   if (isCharging.IsUpdated()) {
-    lv_obj_set_hidden(btnPlug, !isCharging.Get());
+    lv_obj_set_hidden(plugSquare, !isCharging.Get());
   }
   bleState = bleController.IsConnected();
   bleRadioEnabled = bleController.IsRadioEnabled();

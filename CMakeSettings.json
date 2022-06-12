@@ -1,0 +1,9 @@
+{
+  // These environment variables apply to all configurations.
+  "environments": [
+    {
+        "ARM_NONE_EABI_TOOLCHAIN_PATH" : "$HOME/.opt/gcc-arm-none-eabi-9-2020-q2-update",
+        "NRF5_SDK_PATH" : "$HOME/.opt/nRF5_SDK_15.3.0_59ac345"
+    }
+  ]
+}
