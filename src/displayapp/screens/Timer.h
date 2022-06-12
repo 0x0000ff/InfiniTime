@@ -25,6 +25,7 @@ namespace Pinetime::Applications::Screens {
     uint8_t minutesToSet = 0;
     Controllers::TimerController& timerController;
     lv_obj_t* time;
+    lv_obj_t* colon;
     lv_obj_t* msecTime;
     lv_obj_t* btnPlayPause;
     lv_obj_t* txtPlayPause;
@@ -32,6 +33,10 @@ namespace Pinetime::Applications::Screens {
     lv_obj_t* btnMinutesDown;
     lv_obj_t* btnSecondsUp;
     lv_obj_t* btnSecondsDown;
+    lv_obj_t* bgMinutesUp;
+    lv_obj_t* bgMinutesDown;
+    lv_obj_t* bgSecondsUp;
+    lv_obj_t* bgSecondsDown;
     lv_obj_t* txtMUp;
     lv_obj_t* txtMDown;
     lv_obj_t* txtSUp;
