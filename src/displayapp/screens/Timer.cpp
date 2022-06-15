@@ -11,41 +11,53 @@ static void btnEventHandler(lv_obj_t* obj, lv_event_t event) {
 }
 
 void Timer::CreateButtons() {
-  btnMinutesUp = lv_btn_create(lv_scr_act(), bgMinutesUp);
+  btnMinutesUp = lv_btn_create(lv_scr_act(), nullptr);
   btnMinutesUp->user_data = this;
   lv_obj_set_event_cb(btnMinutesUp, btnEventHandler);
   lv_obj_set_style_local_bg_opa(btnMinutesUp, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_OPA_0);
   lv_obj_set_style_local_radius(btnMinutesUp, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, 0);
+  lv_obj_set_style_local_bg_color(btnMinutesUp, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_GREEN);
+  lv_obj_set_size(btnMinutesUp, 100, 90);
+  lv_obj_align(btnMinutesUp, bgMinutes, LV_ALIGN_CENTER, 0, -55);
   txtMUp = lv_label_create(btnMinutesUp, nullptr);
   lv_label_set_text_static(txtMUp, "+");
   lv_btn_set_layout(btnMinutesUp, LV_LAYOUT_OFF);
   lv_obj_align(txtMUp, btnMinutesUp, LV_ALIGN_CENTER, 0, -10);
 
-  btnMinutesDown = lv_btn_create(lv_scr_act(), bgMinutesDown);
+  btnMinutesDown = lv_btn_create(lv_scr_act(), nullptr);
   btnMinutesDown->user_data = this;
   lv_obj_set_event_cb(btnMinutesDown, btnEventHandler);
   lv_obj_set_style_local_bg_opa(btnMinutesDown, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_OPA_0);
   lv_obj_set_style_local_radius(btnMinutesDown, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, 0);
+  lv_obj_set_style_local_bg_color(btnMinutesDown, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_RED);
+  lv_obj_set_size(btnMinutesDown, 100, 90);
+  lv_obj_align(btnMinutesDown,bgMinutes, LV_ALIGN_CENTER, 0, 45);
   txtMDown = lv_label_create(btnMinutesDown, nullptr);
   lv_label_set_text_static(txtMDown, "-");
   lv_btn_set_layout(btnMinutesDown, LV_LAYOUT_OFF);
   lv_obj_align(txtMDown, btnMinutesDown, LV_ALIGN_CENTER, 0, 10);
 
-  btnSecondsUp = lv_btn_create(lv_scr_act(), bgSecondsUp);
+  btnSecondsUp = lv_btn_create(lv_scr_act(), nullptr);
   btnSecondsUp->user_data = this;
   lv_obj_set_event_cb(btnSecondsUp, btnEventHandler);
   lv_obj_set_style_local_bg_opa(btnSecondsUp, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_OPA_0);
-  lv_obj_set_style_local_radius(bgSecondsUp, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, 0);
+  lv_obj_set_style_local_radius(btnSecondsUp, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, 0);
+  lv_obj_set_style_local_bg_color(btnSecondsUp, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_RED);
+  lv_obj_set_size(btnSecondsUp, 100, 90);
+  lv_obj_align(btnSecondsUp,bgSeconds, LV_ALIGN_CENTER, 0, -55);
   txtSUp = lv_label_create(btnSecondsUp, nullptr);
   lv_label_set_text_static(txtSUp, "+");
   lv_btn_set_layout(btnSecondsUp, LV_LAYOUT_OFF);
   lv_obj_align(txtSUp, btnSecondsUp, LV_ALIGN_CENTER, 0, -10);
 
-  btnSecondsDown = lv_btn_create(lv_scr_act(), bgSecondsDown);
+  btnSecondsDown = lv_btn_create(lv_scr_act(), nullptr);
   btnSecondsDown->user_data = this;
   lv_obj_set_event_cb(btnSecondsDown, btnEventHandler);
   lv_obj_set_style_local_bg_opa(btnSecondsDown, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_OPA_0);
   lv_obj_set_style_local_radius(btnSecondsDown, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, 0);
+  lv_obj_set_style_local_bg_color(btnSecondsDown, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_RED);
+  lv_obj_set_size(btnSecondsDown, 100, 90);
+  lv_obj_align(btnSecondsDown,bgSeconds, LV_ALIGN_CENTER, 0, 45);
   txtSDown = lv_label_create(btnSecondsDown, nullptr);
   lv_label_set_text_static(txtSDown, "-");
   lv_btn_set_layout(btnSecondsDown, LV_LAYOUT_OFF);
@@ -61,37 +73,17 @@ Timer::Timer(DisplayApp* app, Controllers::TimerController& timerController)
   lv_obj_set_pos(backgroundLabel, 0, 0);
   lv_label_set_text_static(backgroundLabel, "");
 
-  bgMinutesUp = lv_btn_create(lv_scr_act(), nullptr);
-  lv_obj_set_style_local_bg_color(bgMinutesUp, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_BLACK);
-  lv_obj_set_style_local_bg_grad_color(bgMinutesUp, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_WHITE);
-  lv_obj_set_style_local_bg_grad_dir(bgMinutesUp, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_GRAD_DIR_VER);
-  lv_obj_set_style_local_radius(bgMinutesUp, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, 0);
-  lv_obj_set_size(bgMinutesUp, 100, 90);
-  lv_obj_align(bgMinutesUp, lv_scr_act(), LV_ALIGN_CENTER, -60, -75);
- 
-  bgMinutesDown = lv_btn_create(lv_scr_act(), nullptr);
-  lv_obj_set_style_local_bg_color(bgMinutesDown, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_WHITE);
-  lv_obj_set_style_local_bg_grad_color(bgMinutesDown, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_BLACK);
-  lv_obj_set_style_local_bg_grad_dir(bgMinutesDown, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_GRAD_DIR_VER);
-  lv_obj_set_style_local_radius(bgMinutesDown, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, 0);
-  lv_obj_set_size(bgMinutesDown, 100, 90);
-  lv_obj_align(bgMinutesDown, lv_scr_act(), LV_ALIGN_CENTER, -60, 15);
+  bgMinutes = lv_btn_create(lv_scr_act(), nullptr);
+  lv_obj_set_style_local_bg_color(bgMinutes, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_WHITE);
+  lv_obj_set_style_local_radius(bgMinutes, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, 30);
+  lv_obj_set_size(bgMinutes, 90, 180);
+  lv_obj_align(bgMinutes, lv_scr_act(), LV_ALIGN_CENTER, -55, -30);
 
-  bgSecondsUp = lv_btn_create(lv_scr_act(), nullptr);
-  lv_obj_set_style_local_bg_color(bgSecondsUp, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_BLACK);
-  lv_obj_set_style_local_bg_grad_color(bgSecondsUp, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_WHITE);
-  lv_obj_set_style_local_bg_grad_dir(bgSecondsUp, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_GRAD_DIR_VER);
-  lv_obj_set_style_local_radius(bgSecondsUp, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, 0);
-  lv_obj_set_size(bgSecondsUp, 100, 90);
-  lv_obj_align(bgSecondsUp, lv_scr_act(), LV_ALIGN_CENTER, 60, -75);
-
-  bgSecondsDown = lv_btn_create(lv_scr_act(), nullptr);
-  lv_obj_set_style_local_bg_color(bgSecondsDown, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_WHITE);
-  lv_obj_set_style_local_bg_grad_color(bgSecondsDown, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_BLACK);
-  lv_obj_set_style_local_bg_grad_dir(bgSecondsDown, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_GRAD_DIR_VER);
-  lv_obj_set_style_local_radius(bgSecondsDown, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, 0);
-  lv_obj_set_size(bgSecondsDown, 100, 90);
-  lv_obj_align(bgSecondsDown, lv_scr_act(), LV_ALIGN_CENTER, 60, 15);
+  bgSeconds = lv_btn_create(lv_scr_act(), nullptr);
+  lv_obj_set_style_local_bg_color(bgSeconds, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_WHITE);
+  lv_obj_set_style_local_radius(bgSeconds, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, 30);
+  lv_obj_set_size(bgSeconds, 90, 180);
+  lv_obj_align(bgSeconds, lv_scr_act(), LV_ALIGN_CENTER, 55, -30);
 
   time = lv_label_create(lv_scr_act(), nullptr);
   lv_obj_set_style_local_text_font(time, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, &jetbrains_mono_76);
