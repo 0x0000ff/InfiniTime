@@ -62,6 +62,15 @@ void Timer::CreateButtons() {
   lv_label_set_text_static(txtSDown, "-");
   lv_btn_set_layout(btnSecondsDown, LV_LAYOUT_OFF);
   lv_obj_align(txtSDown, btnSecondsDown, LV_ALIGN_CENTER, 0, 10);
+
+  btnReset = lv_btn_create(lv_scr_act(), nullptr);
+  btnReset->user_data = this;
+  lv_obj_set_event_cb(btnReset, btnEventHandler);
+  lv_obj_set_style_local_bg_color(btnReset, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_SILVER);
+  lv_obj_set_size(btnReset, 80, 50);
+  lv_obj_align(btnReset, lv_scr_act(), LV_ALIGN_IN_BOTTOM_LEFT, 160, 0);
+  txtReset = lv_label_create(btnReset, nullptr);
+  lv_label_set_text_static(txtReset, "Rset");
 }
 
 Timer::Timer(DisplayApp* app, Controllers::TimerController& timerController)
@@ -105,8 +114,8 @@ Timer::Timer(DisplayApp* app, Controllers::TimerController& timerController)
   btnPlayPause->user_data = this;
   lv_obj_set_event_cb(btnPlayPause, btnEventHandler);
   lv_obj_set_style_local_bg_color(btnPlayPause, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_SILVER);
-  lv_obj_set_size(btnPlayPause, 120, 50);
-  lv_obj_align(btnPlayPause, lv_scr_act(), LV_ALIGN_IN_BOTTOM_MID, 0, 0);
+  lv_obj_set_size(btnPlayPause, 160, 50);
+  lv_obj_align(btnPlayPause, lv_scr_act(), LV_ALIGN_IN_BOTTOM_LEFT, 0, 0);
   txtPlayPause = lv_label_create(btnPlayPause, nullptr);
   if (timerController.IsRunning()) {
     lv_label_set_text_static(txtPlayPause, Symbols::pause);
@@ -134,6 +143,9 @@ void Timer::Refresh() {
 
 void Timer::OnButtonEvent(lv_obj_t* obj, lv_event_t event) {
   if (event == LV_EVENT_CLICKED) {
+    if (obj == btnReset) {
+      SetDone();
+    }
     if (obj == btnPlayPause) {
       if (timerController.IsRunning()) {
         lv_label_set_text_static(txtPlayPause, Symbols::play);
@@ -157,6 +169,8 @@ void Timer::OnButtonEvent(lv_obj_t* obj, lv_event_t event) {
         btnMinutesDown = nullptr;
         lv_obj_del(btnMinutesUp);
         btnMinutesUp = nullptr;
+        lv_obj_del(btnReset);
+        btnReset = nullptr;
         lv_obj_set_hidden(bgMinutes, true);
         lv_obj_set_hidden(bgSeconds, true);
         lv_obj_set_hidden(colon, true);
@@ -239,11 +253,13 @@ void Timer::OnButtonEvent(lv_obj_t* obj, lv_event_t event) {
 
 void Timer::SetDone() {
   lv_label_set_text_static(time, "00:00");
-  lv_label_set_text_static(txtPlayPause, Symbols::play);
   secondsToSet = 0;
   minutesToSet = 0;
+}
+
+void Timer::Restore() {
+  lv_label_set_text_static(txtPlayPause, Symbols::play);
   CreateButtons();
   lv_obj_set_hidden(bgMinutes, false);
   lv_obj_set_hidden(bgSeconds, false);
-
 }

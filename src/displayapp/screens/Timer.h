@@ -16,6 +16,7 @@ namespace Pinetime::Applications::Screens {
     ~Timer() override;
     void Refresh() override;
     void SetDone();
+    void Restore();
     void OnButtonEvent(lv_obj_t* obj, lv_event_t event);
 
   private:
@@ -30,6 +31,8 @@ namespace Pinetime::Applications::Screens {
     lv_obj_t* msecTime;
     lv_obj_t* btnPlayPause;
     lv_obj_t* txtPlayPause;
+    lv_obj_t* btnReset;
+    lv_obj_t* txtReset;
     lv_obj_t* btnMinutesUp;
     lv_obj_t* btnMinutesDown;
     lv_obj_t* btnSecondsUp;
