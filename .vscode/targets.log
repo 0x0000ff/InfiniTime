@@ -1,0 +1,640 @@
+make all --print-data-base --no-builtin-variables --no-builtin-rules --question
+# GNU Make 4.3
+# Built for x86_64-pc-linux-gnu
+# Copyright (C) 1988-2020 Free Software Foundation, Inc.
+# License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+# This is free software: you are free to change and redistribute it.
+# There is NO WARRANTY, to the extent permitted by law.
+
+# Make data base, printed on Thu Jun  2 17:20:35 2022
+
+# Variables
+
+# environment
+GDK_BACKEND = x11
+# environment
+LC_ALL = C
+# environment
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-ce9e1d26-d702-4f1e-9ad1-cfab877de27a.sock
+# environment
+VSCODE_CWD = /home/mark
+# environment
+UBUNTU_MENUPROXY = 1
+# environment
+GDM_LANG = en_GB
+# default
+MAKE_COMMAND := make
+# environment
+QT_ACCESSIBILITY = 1
+# automatic
+@D = $(patsubst %/,%,$(dir $@))
+# environment
+VSCODE_HANDLES_UNCAUGHT_ERRORS = true
+# default
+.VARIABLES := 
+# environment
+PWD = /home/mark/source/InfiniTime
+# automatic
+%D = $(patsubst %/,%,$(dir $%))
+# environment
+XDG_DATA_DIRS = /usr/share/mate:/home/mark/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share:/var/lib/snapd/desktop
+# automatic
+^D = $(patsubst %/,%,$(dir $^))
+# environment
+VSCODE_LOG_STACK = false
+# automatic
+%F = $(notdir $%)
+# environment
+VSCODE_CODE_CACHE_PATH = /home/mark/.config/Code/CachedData/c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5
+# environment
+XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session0
+# environment
+LANG = C
+# environment
+XAUTHORITY = /home/mark/.Xauthority
+# default
+.LOADED := 
+# default
+.INCLUDE_DIRS = /usr/local/include /usr/include /usr/include
+# makefile (from 'Makefile', line 61)
+CMAKE_COMMAND = /usr/bin/cmake
+# makefile
+MAKEFLAGS = pqrR
+# environment
+DBUS_STARTER_ADDRESS = unix:path=/run/user/1000/bus,guid=e223d136de6427267ff1d0356298d43b
+# makefile
+CURDIR := /home/mark/source/InfiniTime
+# environment
+VSCODE_PIPE_LOGGING = true
+# environment
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+# automatic
+*D = $(patsubst %/,%,$(dir $*))
+# environment
+MFLAGS = -pqrR
+# environment
+SSH_AUTH_SOCK = /run/user/1000/keyring/ssh
+# default
+.SHELLFLAGS := -c
+# environment
+XDG_CONFIG_DIRS = /etc/xdg/xdg-mate:/etc/xdg
+# automatic
++D = $(patsubst %/,%,$(dir $+))
+# environment
+XDG_SESSION_DESKTOP = mate
+# makefile (from 'Makefile', line 1)
+MAKEFILE_LIST := Makefile
+# makefile (from 'Makefile', line 73)
+CMAKE_BINARY_DIR = /home/mark/source/InfiniTime
+# automatic
+@F = $(notdir $@)
+# environment
+VSCODE_VERBOSE_LOGGING = true
+# environment
+VSCODE_PID = 53276
+# environment
+XDG_SESSION_TYPE = x11
+# automatic
+?D = $(patsubst %/,%,$(dir $?))
+# makefile (from 'Makefile', line 70)
+CMAKE_SOURCE_DIR = /home/mark/source/InfiniTime
+# environment
+SESSION_MANAGER = local/mark-ThinkPad-T440p:@/tmp/.ICE-unix/3907,unix/mark-ThinkPad-T440p:/tmp/.ICE-unix/3907
+# automatic
+*F = $(notdir $*)
+# environment
+QT_QPA_PLATFORMTHEME = gtk2
+# environment
+CHROME_DESKTOP = code-url-handler.desktop
+# environment
+DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus,guid=e223d136de6427267ff1d0356298d43b
+# automatic
+<D = $(patsubst %/,%,$(dir $<))
+# environment
+QT_SCALE_FACTOR = 1
+# environment
+VSCODE_NLS_CONFIG = {"locale":"en-gb","availableLanguages":{},"_languagePackSupport":true}
+# default
+MAKE_HOST := x86_64-pc-linux-gnu
+# makefile (from 'Makefile', line 58)
+SHELL = /bin/sh
+# default
+MAKECMDGOALS := all
+# environment
+SHLVL = 0
+# environment
+MAKELEVEL := 0
+# default
+MAKE = $(MAKE_COMMAND)
+# environment
+PATH = /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+# default
+MAKEFILES := 
+# environment
+LANGUAGE = en_GB:en
+# automatic
+^F = $(notdir $^)
+# environment
+MATE_DESKTOP_SESSION_ID = this-is-deprecated
+# environment
+INVOCATION_ID = 59d7d3ec43384447bc57c875672df99a
+# environment
+COMPIZ_CONFIG_PROFILE = mate
+# environment
+VSCODE_LOG_NATIVE = false
+# automatic
+?F = $(notdir $?)
+# environment
+XDG_SEAT = seat0
+# environment
+XDG_CURRENT_DESKTOP = MATE
+# automatic
++F = $(notdir $+)
+# environment
+XDG_SEAT_PATH = /org/freedesktop/DisplayManager/Seat0
+# environment
+DESKTOP_SESSION = mate
+# environment
+ORIGINAL_XDG_CURRENT_DESKTOP = MATE
+# 'override' directive
+GNUMAKEFLAGS := 
+# makefile (from 'Makefile', line 67)
+EQUALS = =
+# environment
+LOGNAME = mark
+# environment
+GIO_LAUNCHED_DESKTOP_FILE = /usr/share/applications/code.desktop
+# environment
+XDG_VTNR = 7
+# makefile
+.DEFAULT_GOAL := default_target
+# environment
+SYSTEMD_EXEC_PID = 3906
+# makefile (from 'Makefile', line 64)
+RM = /usr/bin/cmake -E rm -f
+# environment
+DISPLAY = :0
+# environment
+USER = mark
+# environment
+GTK_MODULES = appmenu-gtk-module:gail:atk-bridge:canberra-gtk-module:appmenu-gtk-module
+# default
+MAKE_VERSION := 4.3
+# environment
+QT_FONT_DPI = 85
+# environment
+MANAGERPID = 3883
+# environment
+DBUS_STARTER_BUS_TYPE = session
+# environment
+GIO_LAUNCHED_DESKTOP_FILE_PID = 53276
+# makefile (from 'Makefile', line 44)
+MAKESILENT = -s
+# environment
+_ = /usr/share/code/code
+# environment
+XDG_RUNTIME_DIR = /run/user/1000
+# environment
+GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
+# environment
+GTK_OVERLAY_SCROLLING = 0
+# environment
+JOURNAL_STREAM = 8:31999
+# environment
+XDG_SESSION_CLASS = user
+# environment
+VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
+# environment
+HOME = /home/mark
+# environment
+ELECTRON_RUN_AS_NODE = 1
+# environment
+VSCODE_IPC_HOOK = /run/user/1000/vscode-5178fd27-1.67.2-main.sock
+# environment
+XDG_SESSION_ID = c2
+# environment
+IM_CONFIG_PHASE = 1
+# default
+.RECIPEPREFIX := 
+# automatic
+<F = $(notdir $<)
+# default
+SUFFIXES := 
+# environment
+XDG_GREETER_DATA_DIR = /var/lib/lightdm-data/mark
+# default
+.FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync check-symlink load
+# environment
+GDMSESSION = mate
+# variable set hash-table stats:
+# Load=108/1024=11%, Rehash=0, Collisions=6/147=4%
+
+# Pattern-specific Variable Values
+
+# No pattern-specific variable values.
+
+# Directories
+
+# RCS: could not be stat'd.
+# SCCS: could not be stat'd.
+# . (device 55, inode 74908): 39 files, no impossibilities.
+
+# 39 files, no impossibilities in 3 directories.
+
+# Implicit Rules
+
+%: %,v
+
+%: RCS/%
+
+%: RCS/%,v
+
+%: SCCS/s.%
+
+%: s.%
+
+%.hpux_make_needs_suffix_list:
+
+# 6 implicit rules, 0 (0.0%) terminal.
+# Files
+
+depend:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 129):
+	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+
+littlefs: cmake_check_build_system
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 176):
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 littlefs
+
+QCBOR: cmake_check_build_system
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+ 
+#  recipe to execute (from 'Makefile', line 202):
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 QCBOR
+
+lvgl/fast:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 220):
+	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/lvgl.dir/build.make src/CMakeFiles/lvgl.dir/build
+
+default_target: all
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+
+nrf-sdk/fast:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 272):
+	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/nrf-sdk.dir/build.make src/CMakeFiles/nrf-sdk.dir/build
+
+QCBOR/fast:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 207):
+	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/QCBOR.dir/build.make src/CMakeFiles/QCBOR.dir/build
+
+pinetime-app: cmake_check_build_system
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 241):
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 pinetime-app
+
+edit_cache/fast: edit_cache
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+
+nrf-sdk: cmake_check_build_system
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 267):
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 nrf-sdk
+
+pinetime-recovery/fast:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 194):
+	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/pinetime-recovery.dir/build.make src/CMakeFiles/pinetime-recovery.dir/build
+
+# Not a target:
+Makefile:
+#  Implicit rule search has been done.
+#  Last modified 2022-05-29 07:40:45.188447687
+#  File has been updated.
+#  Successfully updated.
+
+rebuild_cache:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 80):
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
+	/usr/bin/cmake --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+
+pinetime-recovery: cmake_check_build_system
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 189):
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 pinetime-recovery
+
+.SILENT:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+pinetime-mcuboot-recovery-loader: cmake_check_build_system
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 137):
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 pinetime-mcuboot-recovery-loader
+
+clean:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 109):
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 clean
+
+cmake_force:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+
+preinstall/fast:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 124):
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 preinstall
+
+lvgl: cmake_check_build_system
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 215):
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 lvgl
+
+pinetime-recovery-loader: cmake_check_build_system
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 228):
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 pinetime-recovery-loader
+
+edit_cache:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 91):
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
+	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+
+pinetime-mcuboot-recovery-loader/fast:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 142):
+	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/pinetime-mcuboot-recovery-loader.dir/build.make src/CMakeFiles/pinetime-mcuboot-recovery-loader.dir/build
+
+rebuild_cache/fast: rebuild_cache
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+
+# Not a target:
+.hpux_make_needs_suffix_list:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+pinetime-mcuboot-app/fast:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 168):
+	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/pinetime-mcuboot-app.dir/build.make src/CMakeFiles/pinetime-mcuboot-app.dir/build
+
+preinstall: all
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 119):
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 preinstall
+
+pinetime-app/fast:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 246):
+	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/pinetime-app.dir/build.make src/CMakeFiles/pinetime-app.dir/build
+
+pinetime-mcuboot-recovery: cmake_check_build_system
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 150):
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 pinetime-mcuboot-recovery
+
+# Not a target:
+.DEFAULT:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+pinetime-mcuboot-app: cmake_check_build_system
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 163):
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 pinetime-mcuboot-app
+
+all: cmake_check_build_system
+#  Phony target (prerequisite of .PHONY).
+#  Command line target.
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has been updated.
+#  Needs to be updated (-q is set).
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/6=0%
+#  recipe to execute (from 'Makefile', line 102):
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/mark/source/InfiniTime/CMakeFiles /home/mark/source/InfiniTime//CMakeFiles/progress.marks
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/mark/source/InfiniTime/CMakeFiles 0
+
+help:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 277):
+	@echo "The following are some of the valid targets for this Makefile:"
+	@echo "... all (the default if no target is provided)"
+	@echo "... clean"
+	@echo "... depend"
+	@echo "... edit_cache"
+	@echo "... rebuild_cache"
+	@echo "... QCBOR"
+	@echo "... littlefs"
+	@echo "... lvgl"
+	@echo "... nimble"
+	@echo "... nrf-sdk"
+	@echo "... pinetime-app"
+	@echo "... pinetime-mcuboot-app"
+	@echo "... pinetime-mcuboot-recovery"
+	@echo "... pinetime-mcuboot-recovery-loader"
+	@echo "... pinetime-recovery"
+	@echo "... pinetime-recovery-loader"
+
+clean/fast: clean
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+
+pinetime-mcuboot-recovery/fast:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 155):
+	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/pinetime-mcuboot-recovery.dir/build.make src/CMakeFiles/pinetime-mcuboot-recovery.dir/build
+
+.NOTPARALLEL:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+nimble/fast:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 259):
+	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/nimble.dir/build.make src/CMakeFiles/nimble.dir/build
+
+nimble: cmake_check_build_system
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 254):
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 nimble
+
+cmake_check_build_system:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  Implicit/static pattern stem: ''
+#  File does not exist.
+#  File has been updated.
+#  Needs to be updated (-q is set).
+# automatic
+# @ := cmake_check_build_system
+# automatic
+# * := 
+# automatic
+# < := 
+# automatic
+# + := 
+# automatic
+# % := 
+# automatic
+ 
+# ^ := 
+# automatic
+# ? := 
+# automatic
+# | := 
+# variable set hash-table stats:
+# Load=8/32=25%, Rehash=0, Collisions=1/14=7%
+#  recipe to execute (from 'Makefile', line 305):
+	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+
+pinetime-recovery-loader/fast:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 233):
+	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/pinetime-recovery-loader.dir/build.make src/CMakeFiles/pinetime-recovery-loader.dir/build
+
+.SUFFIXES: .hpux_make_needs_suffix_list
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+.PHONY: default_target cmake_force rebuild_cache rebuild_cache/fast edit_cache edit_cache/fast all clean clean/fast preinstall preinstall/fast depend pinetime-mcuboot-recovery-loader pinetime-mcuboot-recovery-loader/fast pinetime-mcuboot-recovery pinetime-mcuboot-recovery/fast pinetime-mcuboot-app pinetime-mcuboot-app/fast littlefs littlefs/fast pinetime-recovery pinetime-recovery/fast QCBOR QCBOR/fast lvgl lvgl/fast pinetime-recovery-loader pinetime-recovery-loader/fast pinetime-app pinetime-app/fast nimble nimble/fast nrf-sdk nrf-sdk/fast help cmake_check_build_system
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+littlefs/fast:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 181):
+	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/littlefs.dir/build.make src/CMakeFiles/littlefs.dir/build
+
+# files hash-table stats:
+# Load=43/1024=4%, Rehash=0, Collisions=4/147=3%
+# VPATH Search Paths
+
+# No 'vpath' search paths.
+
+# No general ('VPATH' variable) search path.
+
+# strcache buffers: 1 (0) / strings = 92 / storage = 1137 B / avg = 12 B
+# current buf: size = 8162 B / used = 1137 B / count = 92 / avg = 12 B
+
+# strcache performance: lookups = 268 / hit rate = 65%
+# hash-table stats:
+# Load=92/8192=1%, Rehash=0, Collisions=0/268=0%
+# Finished Make data base on Thu Jun  2 17:20:35 2022
+
+ 

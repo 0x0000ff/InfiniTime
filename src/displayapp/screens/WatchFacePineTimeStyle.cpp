@@ -19,6 +19,7 @@
  * Style/layout copied from TimeStyle for Pebble by Dan Tilden (github.com/tilden)
  */
 
+
 #include "displayapp/screens/WatchFacePineTimeStyle.h"
 #include <date/date.h>
 #include <lvgl/lvgl.h>
@@ -31,6 +32,8 @@
 #include "components/battery/BatteryController.h"
 #include "components/ble/BleController.h"
 #include "components/ble/NotificationManager.h"
+#include "components/heartrate/HeartRateController.h"
+#include "components/motion/MotionController.h"
 #include "components/motion/MotionController.h"
 #include "components/settings/Settings.h"
 #include "displayapp/DisplayApp.h"
@@ -44,7 +47,7 @@ namespace {
   }
 
   bool IsBleIconVisible(bool isRadioEnabled, bool isConnected) {
-    if(!isRadioEnabled) {
+    if (!isRadioEnabled) {
       return true;
     }
     return isConnected;
@@ -52,12 +55,13 @@ namespace {
 }
 
 WatchFacePineTimeStyle::WatchFacePineTimeStyle(DisplayApp* app,
-                             Controllers::DateTime& dateTimeController,
-                             Controllers::Battery& batteryController,
-                             Controllers::Ble& bleController,
-                             Controllers::NotificationManager& notificatioManager,
-                             Controllers::Settings& settingsController,
-                             Controllers::MotionController& motionController)
+                                               Controllers::DateTime& dateTimeController,
+                                               Controllers::Battery& batteryController,
+                                               Controllers::Ble& bleController,
+                                               Controllers::NotificationManager& notificatioManager,
+                                               Controllers::Settings& settingsController,
+                                               Controllers::HeartRateController& heartRateController,
+                                               Controllers::MotionController& motionController)
   : Screen(app),
     currentDateTime {{}},
     dateTimeController {dateTimeController},
@@ -65,6 +69,7 @@ WatchFacePineTimeStyle::WatchFacePineTimeStyle(DisplayApp* app,
     bleController {bleController},
     notificatioManager {notificatioManager},
     settingsController {settingsController},
+    heartRateController {heartRateController},
     motionController {motionController} {
 
   // Create a 200px wide background rectangle
@@ -105,15 +110,12 @@ WatchFacePineTimeStyle::WatchFacePineTimeStyle(DisplayApp* app,
   batteryIcon.SetColor(LV_COLOR_BLACK);
   lv_obj_align(batteryIcon.GetObject(), nullptr, LV_ALIGN_IN_TOP_MID, 0, 2);
 
-  plugIcon = lv_label_create(lv_scr_act(), nullptr);
-  lv_label_set_text_static(plugIcon, Symbols::plug);
-  lv_obj_set_style_local_text_color(plugIcon, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_BLACK);
-  lv_obj_align(plugIcon, sidebar, LV_ALIGN_IN_TOP_MID, 0, 2);
-
-  bleIcon = lv_label_create(lv_scr_act(), nullptr);
-  lv_obj_set_style_local_text_color(bleIcon, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, lv_color_hex(0x000000));
-  lv_label_set_text_static(bleIcon, "");
-
+  bleSquare = lv_obj_create(lv_scr_act(), nullptr);
+  lv_obj_set_style_local_bg_color(bleSquare, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_BLUE);
+  lv_obj_set_size(bleSquare, 12, 12);
+  lv_obj_align(bleSquare, timebar, LV_ALIGN_IN_TOP_LEFT, 5, 5);
+  lv_obj_set_hidden(bleSquare, true);
+  
   notificationIcon = lv_label_create(lv_scr_act(), nullptr);
   lv_obj_set_style_local_text_color(notificationIcon, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, lv_color_hex(0x000000));
   lv_label_set_text_static(notificationIcon, "");
@@ -123,7 +125,7 @@ WatchFacePineTimeStyle::WatchFacePineTimeStyle(DisplayApp* app,
   lv_obj_set_style_local_bg_color(calendarOuter, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_BLACK);
   lv_obj_set_style_local_radius(calendarOuter, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, 0);
   lv_obj_set_size(calendarOuter, 34, 34);
-  lv_obj_align(calendarOuter, sidebar, LV_ALIGN_CENTER, 0, 0);
+  lv_obj_align(calendarOuter, sidebar, LV_ALIGN_CENTER, 0, -14);
 
   calendarInner = lv_obj_create(lv_scr_act(), nullptr);
   lv_obj_set_style_local_bg_color(calendarInner, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_WHITE);
@@ -159,17 +161,29 @@ WatchFacePineTimeStyle::WatchFacePineTimeStyle(DisplayApp* app,
   dateDayOfWeek = lv_label_create(lv_scr_act(), nullptr);
   lv_obj_set_style_local_text_color(dateDayOfWeek, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_BLACK);
   lv_label_set_text_static(dateDayOfWeek, "THU");
-  lv_obj_align(dateDayOfWeek, sidebar, LV_ALIGN_CENTER, 0, -34);
+  lv_obj_align(dateDayOfWeek, sidebar, LV_ALIGN_CENTER, 0, -48);
 
   dateDay = lv_label_create(lv_scr_act(), nullptr);
   lv_obj_set_style_local_text_color(dateDay, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_BLACK);
   lv_label_set_text_static(dateDay, "25");
-  lv_obj_align(dateDay, sidebar, LV_ALIGN_CENTER, 0, 3);
+  lv_obj_align(dateDay, dateDayOfWeek, LV_ALIGN_OUT_BOTTOM_MID, 0, 10);
 
   dateMonth = lv_label_create(lv_scr_act(), nullptr);
   lv_obj_set_style_local_text_color(dateMonth, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_BLACK);
   lv_label_set_text_static(dateMonth, "MAR");
-  lv_obj_align(dateMonth, sidebar, LV_ALIGN_CENTER, 0, 32);
+  lv_obj_align(dateMonth, dateDayOfWeek, LV_ALIGN_OUT_BOTTOM_MID, 0, 40);
+
+  //Heartrate monitor
+  heartbeatIcon = lv_label_create(lv_scr_act(), nullptr);
+  lv_label_set_text_static(heartbeatIcon, Symbols::heartBeat);
+  lv_obj_set_style_local_text_color(heartbeatIcon, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, lv_color_hex(0xCE1B1B));
+  lv_obj_align(heartbeatIcon, sidebar, LV_ALIGN_OUT_TOP_MID, 0, 172);
+
+  heartbeatValue = lv_label_create(lv_scr_act(), nullptr); 
+  lv_obj_set_style_local_text_color(heartbeatValue, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, lv_color_hex(0xCE1B1B));
+  lv_label_set_text_static(heartbeatValue, "---");
+  //there appears to be excess space between the icon and the numbers when it is directly aligned with the icon.
+  lv_obj_align(heartbeatValue, heartbeatIcon, LV_ALIGN_OUT_BOTTOM_MID, 0, -5); 
 
   // Step count gauge
   if (settingsController.GetPTSColorBar() == Pinetime::Controllers::Settings::Colors::White) {
@@ -292,6 +306,16 @@ WatchFacePineTimeStyle::WatchFacePineTimeStyle(DisplayApp* app,
   lv_label_set_text_static(lbl_btnSet, Symbols::settings);
   lv_obj_set_hidden(btnSet, true);
 
+  btnPlug = lv_btn_create(lv_scr_act(), nullptr);
+  btnPlug->user_data = this;
+  lv_obj_set_size(btnPlug, 60, 60);
+  lv_obj_align(btnPlug, timebar, LV_ALIGN_CENTER, 0, 0);
+  lv_obj_set_style_local_bg_opa(btnPlug, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_OPA_50);
+  lv_obj_set_style_local_value_str(btnPlug, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, Symbols::plug);
+  lv_obj_set_style_local_text_color(btnPlug, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_BLACK);
+  lv_obj_set_event_cb(btnPlug, event_handler);
+  lv_obj_set_hidden(btnPlug, true);
+
   taskRefresh = lv_task_create(RefreshTaskCallback, LV_DISP_DEF_REFR_PERIOD, LV_TASK_PRIO_MID, this);
   Refresh();
 }
@@ -335,45 +359,33 @@ bool WatchFacePineTimeStyle::OnButtonPushed() {
 }
 
 void WatchFacePineTimeStyle::SetBatteryIcon() {
+  batteryPercentRemaining = batteryController.PercentRemaining();
   auto batteryPercent = batteryPercentRemaining.Get();
   batteryIcon.SetBatteryPercentage(batteryPercent);
 }
 
 void WatchFacePineTimeStyle::AlignIcons() {
-  if (notificationState.Get() && bleState.Get()) {
-    lv_obj_align(bleIcon, sidebar, LV_ALIGN_IN_TOP_MID, 8, 25);
-    lv_obj_align(notificationIcon, sidebar, LV_ALIGN_IN_TOP_MID, -8, 25);
-  } else if (notificationState.Get() && !bleState.Get()) {
-    lv_obj_align(notificationIcon, sidebar, LV_ALIGN_IN_TOP_MID, 0, 25);
-  } else {
-    lv_obj_align(bleIcon, sidebar, LV_ALIGN_IN_TOP_MID, 0, 25);
+  if (notificationState.Get()) {
+    lv_obj_align(batteryIcon.GetObject(), sidebar, LV_ALIGN_IN_TOP_MID, 6, 4);
+    lv_obj_align(notificationIcon, batteryIcon.GetObject(), LV_ALIGN_OUT_LEFT_MID, -6, 0);
+
+  } 
+  else {
+    lv_obj_align(batteryIcon.GetObject(), sidebar, LV_ALIGN_IN_TOP_MID, 0, 4);
   }
-}
+  }
+
 
 void WatchFacePineTimeStyle::Refresh() {
+  SetBatteryIcon();
   isCharging = batteryController.IsCharging();
   if (isCharging.IsUpdated()) {
-    if (isCharging.Get()) {
-      lv_obj_set_hidden(batteryIcon.GetObject(), true);
-      lv_obj_set_hidden(plugIcon, false);
-    } else {
-      lv_obj_set_hidden(batteryIcon.GetObject(), false);
-      lv_obj_set_hidden(plugIcon, true);
-      SetBatteryIcon();
-    }
+    lv_obj_set_hidden(btnPlug, !isCharging.Get());
   }
-  if (!isCharging.Get()) {
-    batteryPercentRemaining = batteryController.PercentRemaining();
-    if (batteryPercentRemaining.IsUpdated()) {
-      SetBatteryIcon();
-    }
-  }
-
   bleState = bleController.IsConnected();
   bleRadioEnabled = bleController.IsRadioEnabled();
   if (bleState.IsUpdated() || bleRadioEnabled.IsUpdated()) {
-    lv_label_set_text_static(bleIcon, BleIcon::GetIcon(bleState.Get()));
-    AlignIcons();
+      lv_obj_set_hidden(bleSquare, !bleState.Get());
   }
 
   notificationState = notificatioManager.AreNewNotificationsAvailable();
@@ -433,6 +445,23 @@ void WatchFacePineTimeStyle::Refresh() {
       currentDayOfWeek = dayOfWeek;
       currentDay = day;
     }
+  }
+
+  heartbeat = heartRateController.HeartRate();
+  heartbeatRunning = heartRateController.State() != Controllers::HeartRateController::States::Stopped;
+  if (heartbeat.IsUpdated() || heartbeatRunning.IsUpdated()) {
+    if (heartbeatRunning.Get()) {
+      lv_obj_set_style_local_text_color(heartbeatIcon, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, lv_color_hex(0xCE1B1B));
+      lv_label_set_text_fmt(heartbeatValue, "%d", heartbeat.Get());
+      lv_obj_set_style_local_text_color(heartbeatValue, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, lv_color_hex(0xCE1B1B));
+    } else {
+      lv_obj_set_style_local_text_color(heartbeatIcon, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, lv_color_hex(0x1B1B1B));
+      lv_label_set_text_static(heartbeatValue, "---");
+      lv_obj_set_style_local_text_color(heartbeatValue, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, lv_color_hex(0x1B1B1B));
+    }
+
+    lv_obj_realign(heartbeatIcon);
+    lv_obj_realign(heartbeatValue);
   }
 
   stepCount = motionController.NbSteps();

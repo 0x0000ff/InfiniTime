@@ -30,6 +30,7 @@ namespace Pinetime {
                       Controllers::Ble& bleController,
                       Controllers::NotificationManager& notificatioManager,
                       Controllers::Settings& settingsController,
+                      Controllers::HeartRateController& heartRateController,
                       Controllers::MotionController& motionController);
         ~WatchFacePineTimeStyle() override;
 
@@ -56,6 +57,8 @@ namespace Pinetime {
         DirtyValue<bool> bleRadioEnabled {};
         DirtyValue<std::chrono::time_point<std::chrono::system_clock, std::chrono::nanoseconds>> currentDateTime {};
         DirtyValue<bool> motionSensorOk {};
+        DirtyValue<uint8_t> heartbeat {};
+        DirtyValue<bool> heartbeatRunning {};
         DirtyValue<uint32_t> stepCount {};
         DirtyValue<bool> notificationState {};
 
@@ -71,6 +74,7 @@ namespace Pinetime {
         lv_obj_t* btnReset;
         lv_obj_t* btnRandom;
         lv_obj_t* btnClose;
+        lv_obj_t* btnPlug;
         lv_obj_t* timebar;
         lv_obj_t* sidebar;
         lv_obj_t* timeDD1;
@@ -79,8 +83,7 @@ namespace Pinetime {
         lv_obj_t* dateDayOfWeek;
         lv_obj_t* dateDay;
         lv_obj_t* dateMonth;
-        lv_obj_t* plugIcon;
-        lv_obj_t* bleIcon;
+        lv_obj_t* bleSquare;
         lv_obj_t* calendarOuter;
         lv_obj_t* calendarInner;
         lv_obj_t* calendarBar1;
@@ -88,6 +91,8 @@ namespace Pinetime {
         lv_obj_t* calendarCrossBar1;
         lv_obj_t* calendarCrossBar2;
         lv_obj_t* notificationIcon;
+        lv_obj_t* heartbeatValue;
+        lv_obj_t* heartbeatIcon;
         lv_obj_t* stepGauge;
         lv_obj_t* btnSet;
         lv_obj_t* lbl_btnSet;
@@ -100,6 +105,7 @@ namespace Pinetime {
         Controllers::Ble& bleController;
         Controllers::NotificationManager& notificatioManager;
         Controllers::Settings& settingsController;
+        Controllers::HeartRateController& heartRateController;
         Controllers::MotionController& motionController;
 
         void SetBatteryIcon();
