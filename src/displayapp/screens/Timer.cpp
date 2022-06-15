@@ -87,7 +87,7 @@ Timer::Timer(DisplayApp* app, Controllers::TimerController& timerController)
 
   time = lv_label_create(lv_scr_act(), nullptr);
   lv_obj_set_style_local_text_font(time, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, &jetbrains_mono_76);
-  lv_obj_set_style_local_text_color(time, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_BLACK);
+  lv_obj_set_style_local_text_color(time, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_GRAY);
 
   colon = lv_label_create(lv_scr_act(), nullptr);
   lv_obj_set_style_local_text_font(colon, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, &jetbrains_mono_76);
@@ -129,7 +129,7 @@ void Timer::Refresh() {
   if (timerController.IsRunning()) {
     uint32_t seconds = timerController.GetTimeRemaining() / 1000;
     lv_label_set_text_fmt(time, "%02lu:%02lu", seconds / 60, seconds % 60);
-  }
+      }
 }
 
 void Timer::OnButtonEvent(lv_obj_t* obj, lv_event_t event) {
@@ -142,6 +142,8 @@ void Timer::OnButtonEvent(lv_obj_t* obj, lv_event_t event) {
         secondsToSet = seconds % 60;
         timerController.StopTimer();
         CreateButtons();
+        lv_obj_set_hidden(bgMinutes, false);
+        lv_obj_set_hidden(bgSeconds, false);
 
       } else if (secondsToSet + minutesToSet > 0) {
         lv_label_set_text_static(txtPlayPause, Symbols::pause);
@@ -155,6 +157,10 @@ void Timer::OnButtonEvent(lv_obj_t* obj, lv_event_t event) {
         btnMinutesDown = nullptr;
         lv_obj_del(btnMinutesUp);
         btnMinutesUp = nullptr;
+        lv_obj_set_hidden(bgMinutes, true);
+        lv_obj_set_hidden(bgSeconds, true);
+        lv_obj_set_hidden(colon, true);
+
         
       }
     } else {
@@ -237,4 +243,7 @@ void Timer::SetDone() {
   secondsToSet = 0;
   minutesToSet = 0;
   CreateButtons();
+  lv_obj_set_hidden(bgMinutes, false);
+  lv_obj_set_hidden(bgSeconds, false);
+
 }
