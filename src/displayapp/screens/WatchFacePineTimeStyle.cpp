@@ -108,14 +108,22 @@ WatchFacePineTimeStyle::WatchFacePineTimeStyle(DisplayApp* app,
   // Display icons
   batteryIcon.Create(sidebar);
   batteryIcon.SetColor(LV_COLOR_BLACK);
-  lv_obj_align(batteryIcon.GetObject(), nullptr, LV_ALIGN_IN_TOP_MID, 0, 2);
+  lv_obj_align(batteryIcon.GetObject(), nullptr, LV_ALIGN_IN_TOP_RIGHT, -2, 2);
 
   bleSquare = lv_obj_create(lv_scr_act(), nullptr);
   lv_obj_set_style_local_bg_color(bleSquare, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_BLUE);
-  lv_obj_set_size(bleSquare, 12, 12);
-  lv_obj_align(bleSquare, timebar, LV_ALIGN_IN_TOP_LEFT, 5, 5);
+  lv_obj_set_size(bleSquare, 8, 8);
+  lv_obj_align(bleSquare, sidebar, LV_ALIGN_IN_TOP_LEFT, 2, 3);
   lv_obj_set_hidden(bleSquare, true);
+
   
+  btnPlug = lv_obj_create(lv_scr_act(), nullptr);
+  lv_obj_set_size(btnPlug, 8, 8);
+  lv_obj_align(btnPlug, bleSquare, LV_ALIGN_OUT_BOTTOM_LEFT, 0, 2);
+  //lv_obj_set_style_local_bg_opa(btnPlug, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_OPA_0);
+  lv_obj_set_style_local_bg_color(btnPlug, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_YELLOW);
+  lv_obj_set_hidden(btnPlug, true);
+
   notificationIcon = lv_label_create(lv_scr_act(), nullptr);
   lv_obj_set_style_local_text_color(notificationIcon, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, lv_color_hex(0x000000));
   lv_label_set_text_static(notificationIcon, "");
@@ -306,16 +314,6 @@ WatchFacePineTimeStyle::WatchFacePineTimeStyle(DisplayApp* app,
   lv_label_set_text_static(lbl_btnSet, Symbols::settings);
   lv_obj_set_hidden(btnSet, true);
 
-  btnPlug = lv_btn_create(lv_scr_act(), nullptr);
-  btnPlug->user_data = this;
-  lv_obj_set_size(btnPlug, 60, 60);
-  lv_obj_align(btnPlug, timebar, LV_ALIGN_CENTER, 0, 0);
-  lv_obj_set_style_local_bg_opa(btnPlug, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_OPA_50);
-  lv_obj_set_style_local_value_str(btnPlug, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, Symbols::plug);
-  lv_obj_set_style_local_text_color(btnPlug, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_BLACK);
-  lv_obj_set_event_cb(btnPlug, event_handler);
-  lv_obj_set_hidden(btnPlug, true);
-
   taskRefresh = lv_task_create(RefreshTaskCallback, LV_DISP_DEF_REFR_PERIOD, LV_TASK_PRIO_MID, this);
   Refresh();
 }
@@ -365,14 +363,7 @@ void WatchFacePineTimeStyle::SetBatteryIcon() {
 }
 
 void WatchFacePineTimeStyle::AlignIcons() {
-  if (notificationState.Get()) {
-    lv_obj_align(batteryIcon.GetObject(), sidebar, LV_ALIGN_IN_TOP_MID, 6, 4);
-    lv_obj_align(notificationIcon, batteryIcon.GetObject(), LV_ALIGN_OUT_LEFT_MID, -6, 0);
-
-  } 
-  else {
-    lv_obj_align(batteryIcon.GetObject(), sidebar, LV_ALIGN_IN_TOP_MID, 0, 4);
-  }
+    lv_obj_align(notificationIcon, timebar, LV_ALIGN_IN_TOP_LEFT, -2, 2);
   }
 
 
