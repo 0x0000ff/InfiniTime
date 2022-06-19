@@ -43,6 +43,8 @@ namespace Pinetime::Applications::Screens {
     lv_obj_t* txtMDown;
     lv_obj_t* txtSUp;
     lv_obj_t* txtSDown;
+    lv_obj_t* lineMins;
+    lv_obj_t* lineSecs;
     lv_task_t* taskRefresh;
   };
 }
