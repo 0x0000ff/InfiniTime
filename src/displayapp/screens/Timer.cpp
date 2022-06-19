@@ -83,32 +83,45 @@ Timer::Timer(DisplayApp* app, Controllers::TimerController& timerController)
   lv_label_set_text_static(backgroundLabel, "");
 
   bgMinutes = lv_btn_create(lv_scr_act(), nullptr);
-  lv_obj_set_style_local_bg_color(bgMinutes, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_WHITE);
+  lv_obj_set_style_local_bg_color(bgMinutes, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_GRAY);
   lv_obj_set_style_local_radius(bgMinutes, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, 30);
   lv_obj_set_size(bgMinutes, 90, 180);
   lv_obj_align(bgMinutes, lv_scr_act(), LV_ALIGN_CENTER, -55, -30);
 
   bgSeconds = lv_btn_create(lv_scr_act(), nullptr);
-  lv_obj_set_style_local_bg_color(bgSeconds, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_WHITE);
+  lv_obj_set_style_local_bg_color(bgSeconds, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_GRAY);
   lv_obj_set_style_local_radius(bgSeconds, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, 30);
   lv_obj_set_size(bgSeconds, 90, 180);
   lv_obj_align(bgSeconds, lv_scr_act(), LV_ALIGN_CENTER, 55, -30);
 
   time = lv_label_create(lv_scr_act(), nullptr);
   lv_obj_set_style_local_text_font(time, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, &jetbrains_mono_76);
-  lv_obj_set_style_local_text_color(time, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_GRAY);
+  lv_obj_set_style_local_text_color(time, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_WHITE);
 
-  colon = lv_label_create(lv_scr_act(), nullptr);
-  lv_obj_set_style_local_text_font(colon, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, &jetbrains_mono_76);
-  lv_obj_set_style_local_text_color(colon, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_WHITE);
-  lv_label_set_text_static(colon, ":");
+    static lv_point_t  line_points[2] = { {0, 0}, {90, 0} };
+    static lv_style_t style_line;
+
+    lv_style_init(&style_line);
+    lv_style_set_line_width(&style_line, LV_STATE_DEFAULT, 3);
+    lv_style_set_line_color(&style_line, LV_STATE_DEFAULT, LV_COLOR_BLACK);
+    lv_style_set_line_opa(&style_line, LV_LINE_PART_MAIN, LV_OPA_40);
+
+    
+    lineMins = lv_line_create(lv_scr_act(), NULL);
+    lv_line_set_points(lineMins, line_points, 2); 
+    lv_obj_add_style(lineMins, LV_LINE_PART_MAIN, &style_line);
+    lv_obj_align(lineMins, bgMinutes, LV_ALIGN_CENTER, 0, 0);
+
+    lineSecs = lv_line_create(lv_scr_act(), NULL);
+    lv_line_set_points(lineSecs, line_points, 2);     /*Set the points*/
+    lv_obj_add_style(lineSecs, LV_LINE_PART_MAIN, &style_line);     /*Set the points*/
+    lv_obj_align(lineSecs, bgSeconds, LV_ALIGN_CENTER, 0, 0);
 
   uint32_t seconds = timerController.GetTimeRemaining() / 1000;
   lv_label_set_text_fmt(time, "%02lu:%02lu", seconds / 60, seconds % 60);
   lv_obj_set_style_local_text_letter_space(time, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, -6);
 
   lv_obj_align(time, lv_scr_act(), LV_ALIGN_CENTER, -1, -30);
-  lv_obj_align(colon, lv_scr_act(), LV_ALIGN_CENTER, 0, -35);
 
   btnPlayPause = lv_btn_create(lv_scr_act(), nullptr);
   btnPlayPause->user_data = this;
@@ -156,6 +169,8 @@ void Timer::OnButtonEvent(lv_obj_t* obj, lv_event_t event) {
         CreateButtons();
         lv_obj_set_hidden(bgMinutes, false);
         lv_obj_set_hidden(bgSeconds, false);
+        lv_obj_set_hidden(lineMins, false);
+        lv_obj_set_hidden(lineSecs, false);
 
       } else if (secondsToSet + minutesToSet > 0) {
         lv_label_set_text_static(txtPlayPause, Symbols::pause);
@@ -173,7 +188,9 @@ void Timer::OnButtonEvent(lv_obj_t* obj, lv_event_t event) {
         btnReset = nullptr;
         lv_obj_set_hidden(bgMinutes, true);
         lv_obj_set_hidden(bgSeconds, true);
-        lv_obj_set_hidden(colon, true);
+        lv_obj_set_hidden(bgSeconds, true);
+        lv_obj_set_hidden(lineMins, true);
+        lv_obj_set_hidden(lineSecs, true);
 
         
       }
