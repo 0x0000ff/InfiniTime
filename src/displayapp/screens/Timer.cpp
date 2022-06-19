@@ -85,14 +85,14 @@ Timer::Timer(DisplayApp* app, Controllers::TimerController& timerController)
   bgMinutes = lv_btn_create(lv_scr_act(), nullptr);
   lv_obj_set_style_local_bg_color(bgMinutes, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_GRAY);
   lv_obj_set_style_local_radius(bgMinutes, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, 30);
-  lv_obj_set_size(bgMinutes, 90, 180);
-  lv_obj_align(bgMinutes, lv_scr_act(), LV_ALIGN_CENTER, -55, -30);
+  lv_obj_set_size(bgMinutes, 95, 180);
+  lv_obj_align(bgMinutes, lv_scr_act(), LV_ALIGN_CENTER, -65, -30);
 
   bgSeconds = lv_btn_create(lv_scr_act(), nullptr);
   lv_obj_set_style_local_bg_color(bgSeconds, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_GRAY);
   lv_obj_set_style_local_radius(bgSeconds, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, 30);
-  lv_obj_set_size(bgSeconds, 90, 180);
-  lv_obj_align(bgSeconds, lv_scr_act(), LV_ALIGN_CENTER, 55, -30);
+  lv_obj_set_size(bgSeconds, 95, 180);
+  lv_obj_align(bgSeconds, lv_scr_act(), LV_ALIGN_CENTER, 65, -30);
 
   time = lv_label_create(lv_scr_act(), nullptr);
   lv_obj_set_style_local_text_font(time, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, &jetbrains_mono_76);
@@ -118,16 +118,16 @@ Timer::Timer(DisplayApp* app, Controllers::TimerController& timerController)
     lv_obj_align(lineSecs, bgSeconds, LV_ALIGN_CENTER, 0, 0);
 
   uint32_t seconds = timerController.GetTimeRemaining() / 1000;
+//  lv_label_set_text_fmt(time, "%02lu:%02lu", seconds / 60, seconds % 60);
   lv_label_set_text_fmt(time, "%02lu:%02lu", seconds / 60, seconds % 60);
-  lv_obj_set_style_local_text_letter_space(time, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, -6);
-
-  lv_obj_align(time, lv_scr_act(), LV_ALIGN_CENTER, -1, -30);
+  lv_obj_set_style_local_text_letter_space(time, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, 0.5);
+  lv_obj_align(time, lv_scr_act(), LV_ALIGN_IN_TOP_MID, 0, 55);
 
   btnPlayPause = lv_btn_create(lv_scr_act(), nullptr);
   btnPlayPause->user_data = this;
   lv_obj_set_event_cb(btnPlayPause, btnEventHandler);
   lv_obj_set_style_local_bg_color(btnPlayPause, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_SILVER);
-  lv_obj_set_size(btnPlayPause, 160, 50);
+  lv_obj_set_size(btnPlayPause, 140, 50);
   lv_obj_align(btnPlayPause, lv_scr_act(), LV_ALIGN_IN_BOTTOM_LEFT, 0, 0);
   txtPlayPause = lv_label_create(btnPlayPause, nullptr);
   if (timerController.IsRunning()) {
