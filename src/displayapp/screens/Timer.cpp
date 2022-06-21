@@ -42,7 +42,7 @@ Timer::Timer(DisplayApp* app, Controllers::TimerController& timerController) : S
   lv_obj_set_size(btnReset, 60, 50);
   lv_obj_align(btnReset, lv_scr_act(), LV_ALIGN_IN_BOTTOM_RIGHT, -5, 0);
   txtReset = lv_label_create(btnReset, nullptr);
-  lv_label_set_text_static(txtReset, "Reset");
+  lv_label_set_text_static(txtReset, Symbols::resetTimer);
   lv_label_set_align(txtReset, LV_ALIGN_CENTER);
   if (timerController.IsRunning()) {
     SetTimerRunning();
@@ -69,14 +69,14 @@ void Timer::Refresh() {
 void Timer::SetTimerRunning() {
   minuteCounter.HideControls();
   secondCounter.HideControls();
-  lv_label_set_text_static(txtPlayPause, "Pause");
+  lv_label_set_text_static(txtPlayPause, Symbols::pause);
   lv_obj_set_hidden(btnReset, true);
 }
 
 void Timer::SetTimerStopped() {
   minuteCounter.ShowControls();
   secondCounter.ShowControls();
-  lv_label_set_text_static(txtPlayPause, "Start");
+  lv_label_set_text_static(txtPlayPause, Symbols::play);
   lv_obj_set_hidden(btnReset, false);
 }
 
