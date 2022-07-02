@@ -24,8 +24,8 @@ Timer::Timer(DisplayApp* app, Controllers::TimerController& timerController) : S
   lv_label_set_text_static(colonLabel, ":");
   lv_obj_align(colonLabel, lv_scr_act(), LV_ALIGN_CENTER, 0, -29);
 
-  minuteCounter.Create();
-  secondCounter.Create();
+  minuteCounter.Create(&timerController.minutes);
+  secondCounter.Create(&timerController.seconds);
   lv_obj_align(minuteCounter.GetObject(), nullptr, LV_ALIGN_IN_TOP_LEFT, 0, 0);
   lv_obj_align(secondCounter.GetObject(), nullptr, LV_ALIGN_IN_TOP_RIGHT, 0, 0);
 

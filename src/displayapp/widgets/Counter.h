@@ -8,7 +8,7 @@ namespace Pinetime {
       public:
         Counter(int min, int max);
 
-        void Create();
+        void Create(int* valueRfrnce);
         void Increment();
         void Decrement();
         void SetValue(int newValue);
@@ -36,6 +36,7 @@ namespace Pinetime {
         int value = 0;
         int min;
         int max;
+        int* valuePtr = NULL;
       };
     }
   }

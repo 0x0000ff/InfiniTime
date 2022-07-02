@@ -27,19 +27,27 @@ void Counter::Increment() {
     value = min;
   }
   UpdateLabel();
+  if (valuePtr != NULL) {
+    *valuePtr = value;
+  }
 };
 
 void Counter::Decrement() {
   value--;
-  if (value < min) {
-    value = max;
+  if (value < min) { value = max;
   }
   UpdateLabel();
+  if (valuePtr != NULL) { 
+    *valuePtr = value;
+  }
 };
 
 void Counter::SetValue(int newValue) {
   value = newValue;
   UpdateLabel();
+  if (valuePtr != NULL) { 
+    *valuePtr = value;
+  }
 }
 
 void Counter::HideControls() {
@@ -61,7 +69,12 @@ void Counter::UpdateLabel() {
   lv_label_set_text_fmt(number, "%.2i", value);
 }
 
-void Counter::Create() {
+  
+void Counter::Create(int* valueRfrnce = NULL) {
+  if (valueRfrnce != NULL){
+    valuePtr = valueRfrnce;
+  }
+
   constexpr lv_color_t bgColor = LV_COLOR_MAKE(0x38, 0x38, 0x38);
 
   counterContainer = lv_obj_create(lv_scr_act(), nullptr);
@@ -71,8 +84,12 @@ void Counter::Create() {
   lv_obj_set_style_local_text_font(number, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, &jetbrains_mono_76);
   lv_obj_align(number, nullptr, LV_ALIGN_CENTER, 0, 0);
   lv_obj_set_auto_realign(number, true);
-  lv_label_set_text_static(number, "00");
-
+  if (valuePtr == NULL){
+    lv_label_set_text_static(number, "00");
+  }
+  else {
+    SetValue(*valuePtr);
+  }
   static constexpr uint8_t padding = 5;
   const uint8_t width = lv_obj_get_width(number) + padding * 2;
   static constexpr uint8_t btnHeight = 50;
