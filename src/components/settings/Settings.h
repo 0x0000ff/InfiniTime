@@ -8,6 +8,8 @@ namespace Pinetime {
   namespace Controllers {
     class Settings {
     public:
+      uint8_t (Settings::*getCallbackPtr)();
+      void (Settings::*setCallbackPtr)(uint8_t);
       enum class ClockType : uint8_t { H24, H12 };
       enum class Notification : uint8_t { ON, OFF };
       enum class ChimesOption : uint8_t { None, Hours, HalfHours };
@@ -209,6 +211,46 @@ namespace Pinetime {
         return bleRadioEnabled;
       };
 
+      uint8_t GetTimerMinutes() {
+        return settings.timerMinutes;
+      };
+      
+      uint8_t GetTimerSeconds() {
+        return settings.timerSeconds;
+      };
+
+      void SetTimerMinutes(uint8_t value) {
+        if (settings.timerMinutes != value)
+          settingsChanged = true;
+        settings.timerMinutes=value;
+      };
+
+     void SetTimerSeconds(uint8_t value) {
+        if (settings.timerSeconds != value)
+          settingsChanged = true;
+        settings.timerSeconds=value;
+      };
+
+      void SetTimerCallbackChange(void (Settings::* cbPtr)(uint8_t) ) {
+        setCallbackPtr = cbPtr;
+          
+      };
+
+      void SetTimerCallbackUse(uint8_t value) {
+          (this->* setCallbackPtr)(value);          
+      };
+
+
+      void GetTimerCallbackChange(uint8_t (Settings::* cbPtr)() ) {
+        getCallbackPtr = cbPtr;
+          
+      };
+
+      uint8_t GetTimerCallbackUse() {
+        uint8_t valueRtn = (this->* getCallbackPtr)();          
+        return valueRtn;
+      };
+
     private:
       Pinetime::Controllers::FS& fs;
 
@@ -229,8 +271,11 @@ namespace Pinetime {
         std::bitset<4> wakeUpMode {0};
         uint16_t shakeWakeThreshold = 150;
         Controllers::BrightnessController::Levels brightLevel = Controllers::BrightnessController::Levels::Medium;
-      };
 
+        uint8_t timerMinutes = 59; 
+        uint8_t timerSeconds = 59; 
+
+        };
       SettingsData settings;
       bool settingsChanged = false;
 

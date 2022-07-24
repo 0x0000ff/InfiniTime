@@ -12,7 +12,8 @@
 namespace Pinetime::Applications::Screens {
   class Timer : public Screen {
   public:
-    Timer(DisplayApp* app, Controllers::TimerController& timerController);
+    Timer(DisplayApp* app, Controllers::TimerController& timerController, 
+      Controllers::Settings& settingsController);
     ~Timer() override;
     void Refresh() override;
     void Reset();
@@ -25,6 +26,7 @@ namespace Pinetime::Applications::Screens {
     void SetTimerStopped();
     void UpdateMask();
     Controllers::TimerController& timerController;
+    Controllers::Settings& settingsController;
 
     lv_obj_t* msecTime;
     lv_obj_t* btnPlayPause;
@@ -37,8 +39,8 @@ namespace Pinetime::Applications::Screens {
 
     lv_task_t* taskRefresh;
 
-    Widgets::Counter minuteCounter = Widgets::Counter(0, 59);
-    Widgets::Counter secondCounter = Widgets::Counter(0, 59);
+    Widgets::Counter minuteCounter = Widgets::Counter(0, 59, settingsController);
+    Widgets::Counter secondCounter = Widgets::Counter(0, 59, settingsController);
 
     bool buttonPressing = false;
     int maskPosition = 0;

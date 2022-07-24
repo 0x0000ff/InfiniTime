@@ -16,7 +16,8 @@ static void btnEventHandler(lv_obj_t* obj, lv_event_t event) {
   }
 }
 
-Timer::Timer(DisplayApp* app, Controllers::TimerController& timerController) : Screen(app), timerController {timerController} {
+Timer::Timer(DisplayApp* app, Controllers::TimerController& timerController, Controllers::Settings& settingsController)
+  : Screen(app), timerController {timerController}, settingsController {settingsController} {
 
   lv_obj_t* colonLabel = lv_label_create(lv_scr_act(), nullptr);
   lv_obj_set_style_local_text_font(colonLabel, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, &jetbrains_mono_76);
@@ -24,8 +25,8 @@ Timer::Timer(DisplayApp* app, Controllers::TimerController& timerController) : S
   lv_label_set_text_static(colonLabel, ":");
   lv_obj_align(colonLabel, lv_scr_act(), LV_ALIGN_CENTER, 0, -29);
 
-  minuteCounter.Create(&timerController.minutes);
-  secondCounter.Create(&timerController.seconds);
+  minuteCounter.Create(&Controllers::Settings::GetTimerMinutes, &Controllers::Settings::SetTimerMinutes);
+  secondCounter.Create(&Controllers::Settings::GetTimerSeconds, &Controllers::Settings::SetTimerSeconds);
   lv_obj_align(minuteCounter.GetObject(), nullptr, LV_ALIGN_IN_TOP_LEFT, 0, 0);
   lv_obj_align(secondCounter.GetObject(), nullptr, LV_ALIGN_IN_TOP_RIGHT, 0, 0);
 

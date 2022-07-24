@@ -1,17 +1,18 @@
 #pragma once
 #include <lvgl/lvgl.h>
+#include <components/settings/Settings.h>
 
 namespace Pinetime {
   namespace Applications {
     namespace Widgets {
       class Counter {
       public:
-        Counter(int min, int max);
+        Counter(int min, int max, Controllers::Settings& settingsController);
 
-        void Create(int* valueRfrnce);
+        void Create(uint8_t (Controllers::Settings::* getRefrnce)(), void (Controllers::Settings::* setRefrnce)(uint8_t));
         void Increment();
         void Decrement();
-        void SetValue(int newValue);
+        void SetValue(uint8_t newValue);
         void HideControls();
         void ShowControls();
 
@@ -33,10 +34,13 @@ namespace Pinetime {
         lv_obj_t* upperLine;
         lv_obj_t* lowerLine;
         lv_point_t linePoints[2];
-        int value = 0;
+        uint8_t value = 0;
         int min;
         int max;
-        int* valuePtr = NULL;
+
+        Controllers::Settings& settingsController;
+        uint8_t (Controllers::Settings::* getPtr)() = nullptr;
+        void (Controllers::Settings::* setPtr)(uint8_t) = nullptr;
       };
     }
   }

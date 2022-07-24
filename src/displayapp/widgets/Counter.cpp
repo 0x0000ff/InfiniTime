@@ -18,7 +18,8 @@ namespace {
   }
 }
 
-Counter::Counter(int min, int max) : min {min}, max {max} {
+Counter::Counter(int min, int max, Controllers::Settings& settingsController) :
+     min {min}, max {max} , settingsController{settingsController} {
 }
 
 void Counter::Increment() {
@@ -26,28 +27,32 @@ void Counter::Increment() {
   if (value > max) {
     value = min;
   }
-  UpdateLabel();
-  if (valuePtr != NULL) {
-    *valuePtr = value;
+  if (setPtr != nullptr) {
+    settingsController.SetTimerCallbackChange(setPtr);
+    settingsController.SetTimerCallbackUse(value);
   }
+  UpdateLabel();
 };
 
 void Counter::Decrement() {
   value--;
-  if (value < min) { value = max;
+  if (value < min) { 
+    value = max;
+  }
+  if (setPtr != nullptr) {
+    settingsController.SetTimerCallbackChange(setPtr);
+    settingsController.SetTimerCallbackUse(value);
   }
   UpdateLabel();
-  if (valuePtr != NULL) { 
-    *valuePtr = value;
-  }
 };
 
-void Counter::SetValue(int newValue) {
+void Counter::SetValue(uint8_t newValue) {
   value = newValue;
-  UpdateLabel();
-  if (valuePtr != NULL) { 
-    *valuePtr = value;
+  if (setPtr != nullptr) {
+    settingsController.SetTimerCallbackChange(setPtr);
+    settingsController.SetTimerCallbackUse(value);
   }
+  UpdateLabel();
 }
 
 void Counter::HideControls() {
@@ -70,10 +75,11 @@ void Counter::UpdateLabel() {
 }
 
   
-void Counter::Create(int* valueRfrnce = NULL) {
-  if (valueRfrnce != NULL){
-    valuePtr = valueRfrnce;
-  }
+void Counter::Create(uint8_t (Controllers::Settings::* getRefrnce)(),
+  void (Controllers::Settings::* setRefrnce)(uint8_t)) {
+
+  getPtr = getRefrnce;
+  setPtr = setRefrnce;
 
   constexpr lv_color_t bgColor = LV_COLOR_MAKE(0x38, 0x38, 0x38);
 
@@ -84,11 +90,12 @@ void Counter::Create(int* valueRfrnce = NULL) {
   lv_obj_set_style_local_text_font(number, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, &jetbrains_mono_76);
   lv_obj_align(number, nullptr, LV_ALIGN_CENTER, 0, 0);
   lv_obj_set_auto_realign(number, true);
-  if (valuePtr == NULL){
-    lv_label_set_text_static(number, "00");
+  if (getPtr != nullptr) {
+    settingsController.GetTimerCallbackChange(getPtr);
+    SetValue(settingsController.GetTimerCallbackUse());
   }
   else {
-    SetValue(*valuePtr);
+    SetValue(22);
   }
   static constexpr uint8_t padding = 5;
   const uint8_t width = lv_obj_get_width(number) + padding * 2;
