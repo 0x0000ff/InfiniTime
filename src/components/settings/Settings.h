@@ -272,8 +272,8 @@ namespace Pinetime {
         uint16_t shakeWakeThreshold = 150;
         Controllers::BrightnessController::Levels brightLevel = Controllers::BrightnessController::Levels::Medium;
 
-        uint8_t timerMinutes = 59; 
-        uint8_t timerSeconds = 59; 
+        uint8_t timerMinutes = 44; 
+        uint8_t timerSeconds = 44; 
 
         };
       SettingsData settings;

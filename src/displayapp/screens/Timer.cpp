@@ -69,6 +69,10 @@ Timer::Timer(DisplayApp* app, Controllers::TimerController& timerController, Con
   }
 
   taskRefresh = lv_task_create(RefreshTaskCallback, LV_DISP_DEF_REFR_PERIOD, LV_TASK_PRIO_MID, this);
+
+  uint8_t something = settingsController.GetTimerMinutes() + 1;
+  settingsController.SetTimerMinutes(something);
+  settingsController.SaveSettings();
 }
 
 Timer::~Timer() {
