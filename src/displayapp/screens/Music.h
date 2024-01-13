@@ -21,6 +21,9 @@
 #include <lvgl/src/lv_core/lv_obj.h>
 #include <string>
 #include "displayapp/screens/Screen.h"
+#include "displayapp/apps/Apps.h"
+#include "displayapp/Controllers.h"
+#include "Symbols.h"
 
 namespace Pinetime {
   namespace Controllers {
@@ -31,7 +34,7 @@ namespace Pinetime {
     namespace Screens {
       class Music : public Screen {
       public:
-        Music(DisplayApp* app, Pinetime::Controllers::MusicService& music);
+        Music(Pinetime::Controllers::MusicService& music);
 
         ~Music() override;
 
@@ -70,10 +73,8 @@ namespace Pinetime {
 
         /** Total length in seconds */
         int totalLength = 0;
-        /** Current length in seconds */
-        int currentLength;
-        /** Last length */
-        int lastLength;
+        /** Current position in seconds */
+        int currentPosition;
         /** Last time an animation update or timer was incremented */
         TickType_t lastIncrement = 0;
 
@@ -84,5 +85,15 @@ namespace Pinetime {
         /** Watchapp */
       };
     }
+
+    template <>
+    struct AppTraits<Apps::Music> {
+      static constexpr Apps app = Apps::Music;
+      static constexpr const char* icon = Screens::Symbols::music;
+
+      static Screens::Screen* Create(AppControllers& controllers) {
+        return new Screens::Music(*controllers.musicService);
+      };
+    };
   }
 }

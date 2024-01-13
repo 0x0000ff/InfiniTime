@@ -3,6 +3,7 @@
 #include "systemtask/SystemTask.h"
 #include "components/motor/MotorController.h"
 #include "displayapp/screens/Screen.h"
+#include "Symbols.h"
 
 namespace Pinetime {
   namespace Applications {
@@ -10,7 +11,7 @@ namespace Pinetime {
 
       class Metronome : public Screen {
       public:
-        Metronome(DisplayApp* app, Controllers::MotorController& motorController, System::SystemTask& systemTask);
+        Metronome(Controllers::MotorController& motorController, System::SystemTask& systemTask);
         ~Metronome() override;
         void Refresh() override;
         void OnEvent(lv_obj_t* obj, lv_event_t event);
@@ -30,10 +31,21 @@ namespace Pinetime {
 
         lv_obj_t *bpmArc, *bpmTap, *bpmValue;
         lv_obj_t *bpbDropdown, *currentBpbText;
-        lv_obj_t *playPause;
+        lv_obj_t* playPause;
+        lv_obj_t* lblPlayPause;
 
         lv_task_t* taskRefresh;
       };
     }
+
+    template <>
+    struct AppTraits<Apps::Metronome> {
+      static constexpr Apps app = Apps::Metronome;
+      static constexpr const char* icon = Screens::Symbols::drum;
+
+      static Screens::Screen* Create(AppControllers& controllers) {
+        return new Screens::Metronome(controllers.motorController, *controllers.systemTask);
+      };
+    };
   }
 }
